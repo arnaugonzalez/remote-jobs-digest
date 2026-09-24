@@ -1,0 +1,327 @@
+{
+ "jobs": [
+  {
+   "id": "7133d205-5421-4336-a8e2-6037b5f55073",
+   "title": "Backend Engineer 56",
+   "department": "Engineering & Infra",
+   "team": "Internal Applications",
+   "employmentType": "FullTime",
+   "location": "Toronto",
+   "shouldDisplayCompensationOnJobPostings": true,
+   "secondaryLocations": [
+    {
+     "location": "Canada",
+     "address": {
+      "postalAddress": {
+       "addressCountry": "Canada"
+      }
+     }
+    }
+   ],
+   "publishedAt": "2026-09-15T18:21:37.401+00:00",
+   "isListed": true,
+   "isRemote": true,
+   "workplaceType": "Remote",
+   "address": {
+    "postalAddress": {
+     "addressRegion": "Ontario",
+     "addressCountry": "Canada",
+     "addressLocality": "Toronto"
+    }
+   },
+   "jobUrl": "https://example.test/job/57",
+   "applyUrl": "https://example.test/job/58",
+   "descriptionHtml": "<p>We build developer tools. You will work with Python, FastAPI and PostgreSQL. 3+ years of experience. Fully remote, worldwide.</p>",
+   "descriptionPlain": "<p>We build developer tools. You will work with Python, FastAPI and PostgreSQL. 3+ years of experience. Fully remote, worldwide.</p>",
+   "compensation": {
+    "compensationTierSummary": "CA$215K \u2013 CA$310K \u2022 Offers Equity",
+    "scrapeableCompensationSalarySummary": "CA$215K - CA$310K",
+    "compensationTiers": [
+     {
+      "id": "3cc19628-39b9-49e9-9282-fab895e322b1",
+      "tierSummary": "Base Salary CA$215K \u2013 CA$310K \u2022 Offers Equity",
+      "title": "Backend Engineer 59",
+      "additionalInformation": null,
+      "components": [
+       {
+        "id": "c4cc7279-2bd6-4c94-8a98-0c98c903bed0",
+        "summary": "Offers Equity",
+        "compensationType": "EquityPercentage",
+        "interval": "NONE",
+        "currencyCode": null,
+        "minValue": null,
+        "maxValue": null
+       },
+       {
+        "id": "61607966-395b-4ca1-892e-de9247bc96aa",
+        "summary": "Base Salary CA$215K \u2013 CA$310K",
+        "compensationType": "Salary",
+        "interval": "1 YEAR",
+        "currencyCode": "CAD",
+        "minValue": 215000,
+        "maxValue": 310000
+       }
+      ]
+     }
+    ],
+    "summaryComponents": [
+     {
+      "compensationType": "EquityPercentage",
+      "interval": "NONE",
+      "currencyCode": null,
+      "minValue": null,
+      "maxValue": null
+     },
+     {
+      "compensationType": "Salary",
+      "interval": "1 YEAR",
+      "currencyCode": "CAD",
+      "minValue": 215000,
+      "maxValue": 310000
+     }
+    ]
+   }
+  },
+  {
+   "id": "3136a5a5-06fd-4c82-8b72-a43467e6b128",
+   "title": "Backend Engineer 60",
+   "department": "Modeling",
+   "team": "Modeling",
+   "employmentType": "FullTime",
+   "location": "London",
+   "shouldDisplayCompensationOnJobPostings": true,
+   "secondaryLocations": [
+    {
+     "location": "San Francisco",
+     "address": {
+      "postalAddress": {
+       "addressRegion": "California",
+       "addressCountry": "United States",
+       "addressLocality": "San Francisco"
+      }
+     }
+    },
+    {
+     "location": "New York",
+     "address": {
+      "postalAddress": {
+       "addressRegion": "New York",
+       "addressCountry": "United States",
+       "addressLocality": "New York"
+      }
+     }
+    },
+    {
+     "location": "Paris",
+     "address": {
+      "postalAddress": {
+       "addressCountry": "France",
+       "addressLocality": "Paris"
+      }
+     }
+    },
+    {
+     "location": "Toronto",
+     "address": {
+      "postalAddress": {
+       "addressRegion": "Ontario",
+       "addressCountry": "Canada",
+       "addressLocality": "Toronto"
+      }
+     }
+    },
+    {
+     "location": "Montreal",
+     "address": {
+      "postalAddress": {
+       "addressRegion": "Quebec ",
+       "addressCountry": "Canada",
+       "addressLocality": "Montreal"
+      }
+     }
+    }
+   ],
+   "publishedAt": "2024-11-01T16:06:43.318+00:00",
+   "isListed": true,
+   "isRemote": true,
+   "workplaceType": "Remote",
+   "address": {
+    "postalAddress": {
+     "addressRegion": "London",
+     "addressCountry": "United Kingdom",
+     "addressLocality": "London"
+    }
+   },
+   "jobUrl": "https://example.test/job/61",
+   "applyUrl": "https://example.test/job/62",
+   "descriptionHtml": "<p>We build developer tools. You will work with Python, FastAPI and PostgreSQL. 3+ years of experience. Fully remote, worldwide.</p>",
+   "descriptionPlain": "<p>We build developer tools. You will work with Python, FastAPI and PostgreSQL. 3+ years of experience. Fully remote, worldwide.</p>",
+   "compensation": {
+    "compensationTierSummary": "CA$250K \u2013 CA$535K \u2022 Offers Equity \u2022 Multiple Ranges",
+    "scrapeableCompensationSalarySummary": "CA$250K - CA$535K",
+    "compensationTiers": [
+     {
+      "id": "8a3cbd03-b280-43f3-ae5e-317d4dff2771",
+      "tierSummary": "Base Salary CA$295K \u2013 CA$535K \u2022 Offers Equity",
+      "title": "Backend Engineer 63",
+      "additionalInformation": null,
+      "components": [
+       {
+        "id": "e1664463-befc-483f-8d27-5a383f3175b2",
+        "summary": "Base Salary CA$295K \u2013 CA$535K",
+        "compensationType": "Salary",
+        "interval": "1 YEAR",
+        "currencyCode": "CAD",
+        "minValue": 295000,
+        "maxValue": 535000
+       },
+       {
+        "id": "f08feab7-c112-473f-a11a-ef2b3c9214d7",
+        "summary": "Offers Equity",
+        "compensationType": "EquityPercentage",
+        "interval": "NONE",
+        "currencyCode": null,
+        "minValue": null,
+        "maxValue": null
+       }
+      ]
+     },
+     {
+      "id": "12fc2a9a-c6c6-4972-af59-7eecc4e03bb4",
+      "tierSummary": "Base Salary CA$250K \u2013 CA$460K \u2022 Offers Equity",
+      "title": "Backend Engineer 64",
+      "additionalInformation": null,
+      "components": [
+       {
+        "id": "6282ad0a-09f8-4c4c-b31f-96b2b6f8d6c4",
+        "summary": "Offers Equity",
+        "compensationType": "EquityPercentage",
+        "interval": "NONE",
+        "currencyCode": null,
+        "minValue": null,
+        "maxValue": null
+       },
+       {
+        "id": "9c45a31a-cf8f-400f-a570-02a16ee4e44c",
+        "summary": "Base Salary CA$250K \u2013 CA$460K",
+        "compensationType": "Salary",
+        "interval": "1 YEAR",
+        "currencyCode": "CAD",
+        "minValue": 250000,
+        "maxValue": 460000
+       }
+      ]
+     },
+     {
+      "id": "08500dad-ba3e-4d55-ba70-9e7ad6943e0c",
+      "tierSummary": "Base Salary $205K \u2013 $380K \u2022 Offers Equity",
+      "title": "Backend Engineer 65",
+      "additionalInformation": null,
+      "components": [
+       {
+        "id": "4029b7d3-1bc7-42c0-8a72-3498733e1c2c",
+        "summary": "Offers Equity",
+        "compensationType": "EquityPercentage",
+        "interval": "NONE",
+        "currencyCode": null,
+        "minValue": null,
+        "maxValue": null
+       },
+       {
+        "id": "78eb432f-5dbb-43c8-b031-08af0c9bbcd3",
+        "summary": "Base Salary $205K \u2013 $380K",
+        "compensationType": "Salary",
+        "interval": "1 YEAR",
+        "currencyCode": "USD",
+        "minValue": 205000,
+        "maxValue": 380000
+       }
+      ]
+     },
+     {
+      "id": "141e0f70-be43-4944-99e2-81ec56c84233",
+      "tierSummary": "Base Salary $175K \u2013 $325K \u2022 Offers Equity",
+      "title": "Backend Engineer 66",
+      "additionalInformation": null,
+      "components": [
+       {
+        "id": "72df3cc8-64c4-45b9-94b9-1660b62adb2b",
+        "summary": "Offers Equity",
+        "compensationType": "EquityPercentage",
+        "interval": "NONE",
+        "currencyCode": null,
+        "minValue": null,
+        "maxValue": null
+       },
+       {
+        "id": "588cf37c-fd74-470a-8fd8-59f1bc91a8f9",
+        "summary": "Base Salary $175K \u2013 $325K",
+        "compensationType": "Salary",
+        "interval": "1 YEAR",
+        "currencyCode": "USD",
+        "minValue": 175000,
+        "maxValue": 325000
+       }
+      ]
+     }
+    ],
+    "summaryComponents": [
+     {
+      "minValue": 250000,
+      "maxValue": 535000,
+      "currencyCode": "CAD",
+      "interval": "1 YEAR",
+      "compensationType": "Salary"
+     },
+     {
+      "compensationType": "EquityPercentage",
+      "minValue": null,
+      "maxValue": null,
+      "interval": "1 YEAR"
+     }
+    ]
+   }
+  },
+  {
+   "id": "595a2d50-46a5-4ff9-af1c-d58cea9d8e68",
+   "title": "Backend Engineer 67",
+   "department": "Revenue",
+   "team": "Revenue",
+   "employmentType": "FullTime",
+   "location": "Europe",
+   "shouldDisplayCompensationOnJobPostings": false,
+   "secondaryLocations": [
+    {
+     "location": "London",
+     "address": {
+      "postalAddress": {
+       "addressRegion": "London",
+       "addressCountry": "United Kingdom",
+       "addressLocality": "London"
+      }
+     }
+    }
+   ],
+   "publishedAt": "2026-09-20T16:46:49.814+00:00",
+   "isListed": true,
+   "isRemote": true,
+   "workplaceType": "Remote",
+   "address": {
+    "postalAddress": {
+     "addressCountry": "European Union"
+    }
+   },
+   "jobUrl": "https://example.test/job/68",
+   "applyUrl": "https://example.test/job/69",
+   "descriptionHtml": "<p>We build developer tools. You will work with Python, FastAPI and PostgreSQL. 3+ years of experience. Fully remote, worldwide.</p>",
+   "descriptionPlain": "<p>We build developer tools. You will work with Python, FastAPI and PostgreSQL. 3+ years of experience. Fully remote, worldwide.</p>",
+   "compensation": {
+    "compensationTierSummary": null,
+    "scrapeableCompensationSalarySummary": null,
+    "compensationTiers": [],
+    "summaryComponents": []
+   }
+  }
+ ],
+ "apiVersion": "1"
+}

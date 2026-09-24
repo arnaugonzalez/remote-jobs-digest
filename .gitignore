@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+.env
+# Personal files never belong in the repo, even if you keep them next to it.
+config.yaml
+identity.yaml
+profile.md
+output/
+applications/
+outreach/

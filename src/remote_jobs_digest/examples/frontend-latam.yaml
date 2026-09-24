@@ -1,0 +1,466 @@
+# Example: frontend React/TypeScript, living in Mexico, remote Americas/worldwide, paid in USD.
+# Use it:  rjs init --from frontend-latam   (then edit the copy)
+experience:
+  ideal_min: 2
+  ideal_max: 4
+  stretch: 5
+  max_required: 5
+salary:
+  floor:
+    USD: 40000
+  warn:
+    USD: 30000
+  floor_junior:
+    USD: 30000
+  warn_junior:
+    USD: 24000
+  plausible_annual:
+  - 20000
+  - 600000
+stack:
+  required: []
+  weighted:
+  - weight: 3
+    label: frontend
+    strong:
+    - react
+    - next.js
+    - nextjs
+    - typescript
+    - tailwind
+    - design system
+    - frontend engineer
+    - front-end engineer
+    weak:
+    - frontend
+    - front-end
+    - javascript
+    - css
+    - ui
+  - weight: 1
+    label: adjacent
+    strong:
+    - vue
+    - svelte
+    - storybook
+    - playwright
+    weak:
+    - node
+    - graphql
+  min_score: 3
+  score_cap: 10
+  keywords:
+  - react
+  - next.js
+  - typescript
+  - tailwind
+  - frontend
+  - javascript
+  - css
+  - ui
+  - front-end
+  high_signal:
+  - react
+  - next.js
+  - typescript
+  - tailwind
+  - frontend
+geo:
+  home_hints:
+  - mexico
+  - méxico
+  - cdmx
+  - guadalajara
+  - monterrey
+  region_hints:
+  - latam
+  - latin america
+  - americas
+  - north america
+  - est timezone
+  - cst
+  - pst
+  - us timezone
+  away_hints:
+  - argentina
+  - buenos aires
+  - brazil
+  - brasil
+  - colombia
+  - bogota
+  - chile
+  - peru
+  - uruguay
+  - costa rica
+  blocked_hints:
+  - india
+  - bengaluru
+  - bangalore
+  - hyderabad
+  - pune
+  - mumbai
+  - são paulo
+  - sao paulo
+  - philippines
+  - manila
+  - singapore
+  - japan
+  - tokyo
+  - china
+  - shanghai
+  - hong kong
+  - australia
+  - sydney
+  - melbourne
+  - new zealand
+  - south africa
+  - nigeria
+  - kenya
+  - egypt
+  - israel
+  - tel aviv
+  - turkey
+  - türkiye
+  - istanbul
+  - dubai
+  - uae
+  - qatar
+  - doha
+  - saudi
+  - korea
+  - seoul
+  - vietnam
+  - indonesia
+  - thailand
+  - pakistan
+  - bangladesh
+  - ukraine
+  - serbia
+  - belgrade
+  - spain
+  - germany
+  - france
+  - poland
+  - united kingdom
+  global_hints:
+  - worldwide
+  - anywhere
+  - global
+  - remote - global
+  - fully remote
+  - work from anywhere
+  - any location
+  - location agnostic
+  - distributed
+  remote_hints:
+  - remote
+  - anywhere
+  - worldwide
+  - distributed
+  - wfh
+  - teletrabajo
+  - home-based
+  - work from home
+  accept_modes:
+  - remote
+  accept_region_only_remote: true
+  non_us_signals:
+  - worldwide
+  - anywhere
+  - global
+  - europe
+  - emea
+  - latam
+  - americas
+  - international
+  - remote
+role:
+  role_signals:
+  - engineer
+  - engineering
+  - developer
+  - programmer
+  - sre
+  - devops
+  - architect
+  - technical staff
+  - swe
+  - hacker
+  - backend
+  - back-end
+  - full stack
+  - fullstack
+  - full-stack
+  - platform
+  - infrastructure
+  - data scientist
+  - scientist
+  - desarrollador
+  - desarrolladora
+  - programador
+  - programadora
+  - ingeniero
+  - ingeniera
+  - ingeniería
+  non_role_signals:
+  - analyst
+  - consultant
+  - advisory
+  - recruiter
+  - recruiting
+  - sales
+  - account executive
+  - business development
+  - marketing
+  - customer success
+  - customer support
+  - designer
+  - 'design '
+  - writer
+  - copywriter
+  - accountant
+  - 'finance '
+  - legal
+  - counsel
+  - operations specialist
+  - office
+  - people partner
+  - talent
+  - teacher
+  - tutor
+  - instructor
+  - solutions engineer
+  - solution engineer
+  - sales engineer
+  - solutions architect
+  - solution architect
+  - technical support
+  - support engineer
+  - implementation engineer
+  - partner solutions
+  - field engineer
+  - developer advocate
+  - developer relations
+  - evangelist
+  - subject matter expert
+  - curriculum
+  - trainer
+  - professional services
+  - customer engineer
+  - technical account
+  - onboarding specialist
+  - flex solution
+  management_signals:
+  - manager
+  - engineering manager
+  - people manager
+  - delivery manager
+  - director
+  - head of
+  - 'vp '
+  - vice president
+  - cto
+  - chief
+  - scrum master
+  - product owner
+  - project manager
+  - program manager
+  senior_title_signals:
+  - senior
+  - sr.
+  - 'sr '
+  - lead
+  - tech lead
+  - team lead
+  - architect
+  - staff
+  - principal
+  - distinguished
+  - fellow
+  - 6+ years
+  - 7+ years
+  - 8+ years
+  - 10+ years
+  underqualified_signals:
+  - intern
+  - internship
+  - trainee
+  - apprentice
+  - working student
+  - becario
+  - prácticas
+  junior_signals:
+  - junior
+  - jr.
+  - 'jr '
+  - entry level
+  - entry-level
+  - graduate
+  - early career
+  - early-career
+  - 0-1 years
+  junior_years_range_signals:
+  - 0-2 years
+  - 0 to 2 years
+  - 1-2 years
+  - 1 to 2 years
+  mid_signals:
+  - mid level
+  - mid-level
+  - midlevel
+  - intermediate
+  - engineer ii
+  - engineer 2
+  - associate
+  - 2-4 years
+  - 2+ years
+  - 3+ years
+  - 3-5 years
+  allowed_levels:
+  - junior
+  - mid
+  - unknown
+company:
+  kind: product
+  consulting_signals:
+  - consultancy
+  - consulting firm
+  - it consulting
+  - outsourcing
+  - nearshore
+  - offshore
+  - staffing agency
+  - body shop
+  - staff augmentation
+  - client projects
+  - our clients' projects
+  - recruitment agency
+  - on behalf of our client
+  consulting_companies: []
+  staffing_platforms:
+  - lemon.io
+  - toptal
+  - andela
+  - turing
+  - x-team
+  - crossover
+  - remotebase
+  - mindrift
+  - outlier
+  - gun.io
+  - braintrust
+  - a.team
+  - arc.dev
+  - upwork
+  - fiverr
+  - freelancer.com
+  - remotasks
+  - appen
+  - telus international
+  - prolific
+  - surge ai
+  - micro1
+  - clickworker
+  - proxify
+  paywalled_domains:
+  - weworkremotely.com
+  - flexjobs.com
+  - toptal.com/apply
+signals:
+  positive:
+  - worldwide
+  - anywhere
+  - global
+  - work from anywhere
+  - international
+  - outside the us
+  - outside us
+  - remote - global
+  - europe
+  - european
+  - eu timezone
+  - emea
+  - cet
+  - cest
+  - latam
+  - remote anywhere
+  - fully remote
+  - contractor
+  - contract
+  - freelance
+  - independent contractor
+  - b2b
+  - '1099'
+  - open to international
+  - no sponsorship required
+  - no visa required
+  - location agnostic
+  - visa not required
+  negative:
+  - must be located in the us
+  - must reside in the us
+  - us only
+  - usa only
+  - united states only
+  - us-based only
+  - us based only
+  - domestic only
+  - within the us
+  - must live in the us
+  - authorized to work in the us
+  - us work authorization
+  - must be authorized to work in the united states
+  - sponsorship not available
+  - no visa sponsorship
+  - us citizen
+  - us citizenship
+  - security clearance
+  - active clearance
+  - secret clearance
+  - must be a us citizen
+  strong_intl:
+  - work from anywhere
+  - anywhere in the world
+  - hire anywhere
+  - open to international
+  - no visa required
+  - visa not required
+  - no sponsorship required
+  - any country
+  - globally distributed
+  - remote - worldwide
+  - remote (worldwide)
+  - location agnostic
+  - we hire globally
+  - fully distributed
+  exclusivity:
+  - no moonlighting
+  - moonlighting is not
+  - exclusivity
+  - exclusive service
+  - full-time exclusivity
+  - may not engage in any other employment
+  - no side projects
+  - not permitted to work for any other
+  - dedicate your full working time
+narrative: Frontend engineer (React/TypeScript), 3 years, based in Mexico, wants US-timezone
+  remote roles paid in USD.
+search:
+  search_terms:
+  - react
+  - frontend
+  - typescript
+  - next.js
+  active_sources:
+  - ats
+  - remoteok
+  - remotive
+  - himalayas
+  - hackernews
+  - workingnomads
+  - nodesk
+  board_queries:
+  - react developer
+  - frontend engineer
+  board_locations:
+  - Mexico

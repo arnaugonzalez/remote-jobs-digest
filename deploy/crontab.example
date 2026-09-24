@@ -1,0 +1,3 @@
+# Daily digest at 08:00 local time. `crontab -e` and paste (adjust the rjs path:
+# `command -v rjs` after `pipx install remote-jobs-digest`).
+0 8 * * *  $HOME/.local/bin/rjs run --quiet >> $HOME/.local/share/rjs/cron.log 2>&1

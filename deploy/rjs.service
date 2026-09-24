@@ -1,0 +1,13 @@
+# systemd *user* unit. Install:
+#   cp rjs.service rjs.timer ~/.config/systemd/user/
+#   systemctl --user daemon-reload && systemctl --user enable --now rjs.timer
+#   loginctl enable-linger "$USER"   # keep running when you are logged out
+[Unit]
+Description=remote-jobs-digest daily run
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/rjs run --quiet
+TimeoutStartSec=45min

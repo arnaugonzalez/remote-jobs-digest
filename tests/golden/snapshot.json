@@ -1,0 +1,282 @@
+{
+  "company_consulting_known": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": true,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": 3
+  },
+  "company_paywalled_domain": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": 3
+  },
+  "company_staffing_platform": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": 3
+  },
+  "exclusivity_flagged": {
+    "geo": "ok",
+    "has_exclusivity": true,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "REVISAR",
+    "years_required": 3
+  },
+  "geo_germany_onsite": {
+    "geo": "onsite",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": 3
+  },
+  "geo_germany_remote_other_eu": {
+    "geo": "remote_other_eu",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "REVISAR",
+    "years_required": 3
+  },
+  "geo_india": {
+    "geo": "onsite",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": 3
+  },
+  "geo_remote_bare": {
+    "geo": "remote_unclear",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "REVISAR",
+    "years_required": 3
+  },
+  "geo_remote_latam": {
+    "geo": "remote_unclear",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "REVISAR",
+    "years_required": 3
+  },
+  "geo_remote_worldwide": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "APTA",
+    "years_required": 3
+  },
+  "geo_spain_onsite_local": {
+    "geo": "onsite_local",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "REVISAR",
+    "years_required": 3
+  },
+  "geo_spain_remote_ok": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "APTA",
+    "years_required": 3
+  },
+  "geo_unknown_no_location": {
+    "geo": "unknown",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "REVISAR",
+    "years_required": 3
+  },
+  "geo_us_city_only": {
+    "geo": "us_only",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": 3
+  },
+  "geo_us_only_but_hires_globally": {
+    "geo": "us_only",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": 3
+  },
+  "level_ideal_mid": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "APTA",
+    "years_required": 3
+  },
+  "level_junior_range": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "junior",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "APTA",
+    "years_required": 2
+  },
+  "level_overqualified_senior": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "overqualified",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": 8
+  },
+  "level_underqualified_intern": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "underqualified",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": null
+  },
+  "role_not_engineering": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": 3
+  },
+  "salary_below_floor": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "below_floor",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": 3
+  },
+  "salary_low": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "low",
+    "stack_score": 3,
+    "verdict": "REVISAR",
+    "years_required": 3
+  },
+  "salary_ok": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "ok",
+    "stack_score": 3,
+    "verdict": "APTA",
+    "years_required": 3
+  },
+  "salary_unrecognized_currency": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "APTA",
+    "years_required": 3
+  },
+  "signal_negative_us_citizen": {
+    "geo": "us_only",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": 3
+  },
+  "stack_below_threshold": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "mid",
+    "salary_flag": "unknown",
+    "stack_score": 0,
+    "verdict": "REVISAR",
+    "years_required": 3
+  },
+  "years_over_max": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "overqualified",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "DESCARTADA",
+    "years_required": 8
+  },
+  "years_stretch": {
+    "geo": "ok",
+    "has_exclusivity": false,
+    "is_consulting": false,
+    "level": "unknown",
+    "salary_flag": "unknown",
+    "stack_score": 3,
+    "verdict": "REVISAR",
+    "years_required": 5
+  }
+}

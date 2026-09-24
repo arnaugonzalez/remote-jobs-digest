@@ -1,0 +1,64 @@
+{
+ "exhaustive": {
+  "nbHits": false,
+  "typo": false
+ },
+ "exhaustiveNbHits": false,
+ "exhaustiveTypo": false,
+ "hits": [
+  {
+   "author": "whoishiring",
+   "created_at": "2026-09-01T15:01:17Z",
+   "created_at_i": 1788274877,
+   "objectID": "49522897",
+   "title": "Ask HN: Who is hiring? (September 2026)"
+  },
+  {
+   "author": "whoishiring",
+   "created_at": "2026-09-01T15:01:17Z",
+   "created_at_i": 1788274877,
+   "objectID": "49522896",
+   "title": "Ask HN: Who wants to be hired? (September 2026)"
+  },
+  {
+   "author": "whoishiring",
+   "created_at": "2026-08-03T15:00:54Z",
+   "created_at_i": 1785769254,
+   "objectID": "49156683",
+   "title": "Ask HN: Freelancer? Seeking freelancer? (September 2026)"
+  }
+ ],
+ "hitsPerPage": 20,
+ "nbHits": 510,
+ "nbPages": 26,
+ "page": 0,
+ "params": "query=Who+is+hiring&tags=story%2Cauthor_whoishiring&hitsPerP",
+ "processingTimeMS": 22,
+ "processingTimingsMS": {
+  "_request": {
+   "queue": 3,
+   "roundTrip": 23
+  },
+  "afterFetch": {
+   "format": {
+    "highlighting": 1,
+    "total": 2
+   }
+  },
+  "fetch": {
+   "query": 7,
+   "scanning": 9,
+   "total": 17
+  },
+  "getIdx": {
+   "load": {
+    "gens": 2,
+    "total": 3
+   },
+   "total": 3
+  },
+  "total": 22
+ },
+ "query": "Who is hiring",
+ "serverTimeMS": 28
+}

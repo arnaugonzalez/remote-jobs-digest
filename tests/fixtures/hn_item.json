@@ -1,0 +1,25 @@
+{
+ "id": 49522897,
+ "title": "Ask HN: Who is hiring? (September 2026)",
+ "created_at_i": 1788274877,
+ "children": [
+  {
+   "id": 1,
+   "author": "a",
+   "text": "Acme Remote Inc | Backend Engineer | REMOTE (Worldwide) | Full-time<p>Python, FastAPI, Postgres. 3+ years. https://example.test/jobs/1</p>",
+   "children": []
+  },
+  {
+   "id": 2,
+   "author": "b",
+   "text": "Beta Labs | Frontend Engineer | Berlin, ONSITE<p>React, TypeScript.</p>",
+   "children": []
+  },
+  {
+   "id": 3,
+   "author": "c",
+   "text": null,
+   "children": []
+  }
+ ]
+}

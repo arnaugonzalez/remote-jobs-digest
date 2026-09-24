@@ -1,0 +1,42 @@
+# Serverless option: copy to .github/workflows/digest.yml in a PRIVATE repo.
+# Secrets: RJS_CONFIG_YAML (the contents of your config.yaml), and optionally
+# TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, RJS_LLM_API_KEY.
+# The digest is also uploaded as a workflow artifact.
+name: daily-digest
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      RJS_HOME: ${{ github.workspace }}/.rjs
+      RJS_DATA_DIR: ${{ github.workspace }}/.rjs-data
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      RJS_LLM_API_KEY: ${{ secrets.RJS_LLM_API_KEY }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install remote-jobs-digest
+      - name: Restore seen-jobs state and board lists
+        uses: actions/cache@v4
+        with:
+          path: .rjs-data
+          key: rjs-data-${{ github.run_id }}
+          restore-keys: rjs-data-
+      - env:
+          RJS_CONFIG_YAML: ${{ secrets.RJS_CONFIG_YAML }}
+        run: |
+          mkdir -p "$RJS_HOME"
+          printf '%s\n' "$RJS_CONFIG_YAML" > "$RJS_HOME/config.yaml"
+          rjs config check
+          rjs run --quiet
+      - uses: actions/upload-artifact@v4
+        with:
+          name: digest
+          path: .rjs-data/output/digest_latest.md
