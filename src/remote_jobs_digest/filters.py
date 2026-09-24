@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import re
 
-from remote_jobs_digest import config
+from remote_jobs_digest import config, platforms
 from remote_jobs_digest.sources.base import Job
 
 # --- Salario --------------------------------------------------------------
@@ -322,11 +322,11 @@ def is_engineering_role(job: Job) -> bool:
     return any(s in title for s in config.ROLE_SIGNALS)
 
 
-def is_staffing_platform(job: Job) -> bool:
-    """Marketplaces de freelance y gig-work de anotación: intermediarios, no
-    empleadores. El handoff los trata como plan B (§3.5), aparte del listado."""
-    company = job.company.lower()
-    return any(p in company for p in config.STAFFING_PLATFORMS)
+def platform_match(job: Job) -> tuple[str, str] | None:
+    """Intermediary platform (marketplace, AI data work, reposter), not an employer."""
+    c = config.PROFILE.company
+    return platforms.match(job.company, c.skip_platforms, c.staffing_platforms,
+                           c.allow_platforms)
 
 
 def salary_verdict(job: Job) -> str:
@@ -403,9 +403,9 @@ def classify(job: Job) -> None:
         job.verdict = "DESCARTADA"
         job.reason = "Portal de pago: no se puede aplicar sin suscripción"
         return
-    if is_staffing_platform(job):
+    if hit := platform_match(job):
         job.verdict = "DESCARTADA"
-        job.reason = f"Plataforma de staffing/gig ({job.company}) — ver §3.5"
+        job.reason = f"Platform, not an employer ({hit[0]}: {hit[1]})"
         return
     if job.is_consulting:
         job.verdict = "DESCARTADA"

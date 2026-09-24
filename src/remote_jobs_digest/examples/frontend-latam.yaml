@@ -337,31 +337,11 @@ company:
   - recruitment agency
   - on behalf of our client
   consulting_companies: []
-  staffing_platforms:
-  - lemon.io
-  - toptal
-  - andela
-  - turing
-  - x-team
-  - crossover
-  - remotebase
-  - mindrift
-  - outlier
-  - gun.io
-  - braintrust
-  - a.team
-  - arc.dev
-  - upwork
-  - fiverr
-  - freelancer.com
-  - remotasks
-  - appen
-  - telus international
-  - prolific
-  - surge ai
-  - micro1
-  - clickworker
-  - proxify
+  # Bundled platform categories to drop: talent_marketplace, freelance_marketplace,
+  # ai_data_work, reposting_intermediary. `rjs platforms` lists every name.
+  skip_platforms: [talent_marketplace, freelance_marketplace, ai_data_work, reposting_intermediary]
+  allow_platforms: []      # bundled names to keep anyway, e.g. [Toptal]
+  staffing_platforms: []   # your own extra names
   paywalled_domains:
   - weworkremotely.com
   - flexjobs.com

@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import re
 
+from remote_jobs_digest import platforms
 from remote_jobs_digest.profile import lexicon
 from remote_jobs_digest.profile.types import Profile
 from remote_jobs_digest.sources.base import Job
@@ -351,11 +352,11 @@ class Classifier:
             return False
         return any(s in title for s in r.role_signals)
 
-    def is_staffing_platform(self, job: Job) -> bool:
-        """Marketplaces de freelance y gig-work: intermediarios, no
-        empleadores directos."""
-        company = job.company.lower()
-        return any(p in company for p in self.profile.company.staffing_platforms)
+    def platform_match(self, job: Job) -> tuple[str, str] | None:
+        """Intermediary platform (marketplace, AI data work, reposter), not an employer."""
+        c = self.profile.company
+        return platforms.match(job.company, c.skip_platforms, c.staffing_platforms,
+                               c.allow_platforms)
 
     # --- Clasificación -----------------------------------------------------
 
@@ -407,9 +408,9 @@ class Classifier:
             job.verdict = "DESCARTADA"
             job.reason = "Portal de pago: no se puede aplicar sin suscripción"
             return
-        if self.is_staffing_platform(job):
+        if hit := self.platform_match(job):
             job.verdict = "DESCARTADA"
-            job.reason = f"Plataforma de staffing/gig ({job.company})"
+            job.reason = f"Platform, not an employer ({hit[0]}: {hit[1]})"
             return
         if p.company.kind == "product" and job.is_consulting:
             job.verdict = "DESCARTADA"

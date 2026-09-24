@@ -48,7 +48,6 @@ def test_rol_y_empresa_derivan_de_profile():
     assert config.NON_ROLE_SIGNALS == list(P.role.non_role_signals)
     assert config.ALLOWED_LEVELS == set(P.role.allowed_levels)
     assert config.CONSULTING_COMPANIES == list(P.company.consulting_companies)
-    assert config.STAFFING_PLATFORMS == list(P.company.staffing_platforms)
 
 
 def test_entorno_operacion_no_depende_de_profile():

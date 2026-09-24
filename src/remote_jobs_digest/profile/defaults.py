@@ -191,15 +191,10 @@ _COMPANY = CompanyKindPolicy(
     # No list of consultancies ships with the package: which employers to skip
     # is yours to decide (company.consulting_companies in config.yaml).
     consulting_companies=(),
-    # Talent marketplaces post templates ("Senior X? Work remote!") that match
-    # every stack; they are platforms, not roles, so they are filtered by default.
-    staffing_platforms=(
-        "lemon.io", "toptal", "andela", "turing", "x-team", "crossover",
-        "remotebase", "mindrift", "outlier", "gun.io", "braintrust", "a.team",
-        "arc.dev", "upwork", "fiverr", "freelancer.com", "remotasks", "appen",
-        "telus international", "prolific", "surge ai", "micro1", "clickworker",
-        "proxify",
-    ),
+    # Talent/freelance marketplaces, AI data work and reposting sites are in the
+    # bundled data/platforms.yaml, filtered by category (skip_platforms). This
+    # is for your own extra names.
+    staffing_platforms=(),
     paywalled_domains=("weworkremotely.com", "flexjobs.com", "toptal.com/apply"),
 )
 

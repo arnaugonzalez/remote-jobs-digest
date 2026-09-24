@@ -12,6 +12,8 @@ from __future__ import annotations
 from dataclasses import dataclass, replace
 from typing import Literal, Mapping, Sequence
 
+from remote_jobs_digest.platforms import CATEGORIES
+
 Currency = Literal["EUR", "USD", "GBP"]
 WorkMode = Literal["remote", "hybrid", "onsite"]
 CompanyKind = Literal["product", "consultancy", "any"]
@@ -420,8 +422,12 @@ class CompanyKindPolicy:
     kind: CompanyKind                       # "product" | "consultancy" | "any"
     consulting_signals: tuple[str, ...]
     consulting_companies: tuple[str, ...]
-    staffing_platforms: tuple[str, ...]
+    staffing_platforms: tuple[str, ...]     # your own extra platform names
     paywalled_domains: tuple[str, ...]
+    # Categories of the bundled platform list (platforms.CATEGORIES) to drop,
+    # and bundled names to keep despite their category.
+    skip_platforms: tuple[str, ...] = CATEGORIES
+    allow_platforms: tuple[str, ...] = ()
 
     @classmethod
     def from_mapping(cls, m: Mapping[str, object], path: str,
@@ -433,15 +439,25 @@ class CompanyKindPolicy:
             kind = "any"
         def lst(key: str) -> tuple[str, ...]:
             return _get_tuple_str(m, key, f"{path}.{key}", (), problems)
+        skip = _get_tuple_str(m, "skip_platforms", f"{path}.skip_platforms",
+                              CATEGORIES, problems)
+        for c in skip:
+            if c not in CATEGORIES:
+                problems.append((f"{path}.skip_platforms",
+                                 f"'{c}' is not a category (use {CATEGORIES})"))
         return cls(kind, lst("consulting_signals"), lst("consulting_companies"),
-                   lst("staffing_platforms"), lst("paywalled_domains"))
+                   lst("staffing_platforms"), lst("paywalled_domains"),
+                   tuple(c for c in skip if c in CATEGORIES),
+                   lst("allow_platforms"))
 
     def to_mapping(self) -> dict:
         return {"kind": self.kind,
                 "consulting_signals": list(self.consulting_signals),
                 "consulting_companies": list(self.consulting_companies),
                 "staffing_platforms": list(self.staffing_platforms),
-                "paywalled_domains": list(self.paywalled_domains)}
+                "paywalled_domains": list(self.paywalled_domains),
+                "skip_platforms": list(self.skip_platforms),
+                "allow_platforms": list(self.allow_platforms)}
 
 
 @dataclass(frozen=True, slots=True)

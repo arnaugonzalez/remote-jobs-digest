@@ -1,0 +1,65 @@
+# Intermediary platforms: their postings are not a direct employer's role.
+#
+# Each entry is categorised from how the company describes itself on its own
+# site (`source`, checked 2026-09-24). Being listed is a statement about the
+# business model, not about quality: pick the categories you want dropped with
+# company.skip_platforms, or keep one with company.allow_platforms.
+#
+# match: whole words anywhere in the posting's company field.
+# exact: the whole company field; for names shared with unrelated companies
+#        (e.g. "Crossover" vs "Crossover Health").
+# Corrections and additions: open an issue with the company's own page.
+
+platforms:
+  # --- talent_marketplace: vetted network placing engineers with clients ---
+  - {name: Lemon.io, category: talent_marketplace, match: [lemon.io], source: "https://lemon.io/llm-info/"}
+  - {name: Toptal, category: talent_marketplace, match: [toptal], source: "https://www.toptal.com/"}
+  - {name: Andela, category: talent_marketplace, match: [andela], source: "https://www.andela.com/for-talent"}
+  - {name: Turing, category: talent_marketplace, match: [turing.com], exact: [turing], source: "https://www.turing.com/"}
+  - {name: X-Team, category: talent_marketplace, match: [x-team], source: "https://x-team.com/about"}
+  - {name: Crossover, category: talent_marketplace, match: [crossover.com], exact: [crossover], source: "https://www.crossover.com/about"}
+  - {name: Remotebase, category: talent_marketplace, match: [remotebase], source: "https://remotebase.com/about-us"}
+  - {name: Gun.io, category: talent_marketplace, match: [gun.io], source: "https://gun.io/about/"}
+  # Only the domain: "Braintrust" is also an unrelated LLM-eval company that hires directly.
+  - {name: Braintrust (talent network), category: talent_marketplace, match: [usebraintrust], source: "https://www.usebraintrust.com/"}
+  - {name: A.Team, category: talent_marketplace, match: [a.team], source: "https://www.a.team/expert-teams"}
+  - {name: Arc.dev, category: talent_marketplace, match: [arc.dev], source: "https://arc.dev/about-us"}
+  - {name: Proxify, category: talent_marketplace, match: [proxify], source: "https://proxify.io/"}
+  - {name: Talent500, category: talent_marketplace, match: [talent500], source: "https://talent500.com/about/"}
+  - {name: Revelo, category: talent_marketplace, match: [revelo], source: "https://www.revelo.com/"}
+  - {name: Terminal, category: talent_marketplace, match: [terminal.io], exact: [terminal], source: "https://www.terminal.io/about"}
+  - {name: Uplers, category: talent_marketplace, match: [uplers], source: "https://www.uplers.com/"}
+  - {name: Index.dev, category: talent_marketplace, match: [index.dev], source: "https://www.index.dev/about"}
+  - {name: Distributed, category: talent_marketplace, match: [distributed.com], exact: [distributed], source: "https://www.distributed.com/about"}
+  - {name: G2i, category: talent_marketplace, match: [g2i], source: "https://www.g2i.co/"}
+
+  # --- freelance_marketplace: open marketplace, anyone bids for gigs ---
+  - {name: Upwork, category: freelance_marketplace, match: [upwork], source: "https://www.upwork.com/"}
+  - {name: Fiverr, category: freelance_marketplace, match: [fiverr], source: "https://www.fiverr.com/"}
+  - {name: Freelancer.com, category: freelance_marketplace, match: [freelancer.com], source: "https://www.freelancer.com/about"}
+  - {name: YunoJuno, category: freelance_marketplace, match: [yunojuno], source: "https://www.yunojuno.com/"}
+  - {name: Codementor, category: freelance_marketplace, match: [codementor], source: "https://www.codementor.io/freelance"}
+  - {name: Contra, category: freelance_marketplace, match: [contra.com], exact: [contra], source: "https://contra.com/mission"}
+  - {name: Malt, category: freelance_marketplace, match: [malt.com], exact: [malt], source: "https://www.malt.com/"}
+
+  # --- ai_data_work: paid AI-training, annotation and evaluation tasks ---
+  # Some of these also hire engineers directly; keep one with allow_platforms.
+  - {name: Mindrift, category: ai_data_work, match: [mindrift], source: "https://mindrift.ai/about"}
+  - {name: Outlier, category: ai_data_work, match: [outlier.ai], exact: [outlier], source: "https://outlier.ai/about-us"}
+  - {name: Remotasks, category: ai_data_work, match: [remotasks], source: "https://www.remotasks.com/"}
+  - {name: Appen, category: ai_data_work, match: [appen], source: "https://www.appen.com/about-us"}
+  - {name: TELUS Digital, category: ai_data_work, match: [telus digital, telus international], source: "https://www.telusdigital.com/about/newsroom/telus-digital-officially-launches-global-rebrand"}
+  - {name: Prolific, category: ai_data_work, match: [prolific.com, prolific academic], exact: [prolific], source: "https://www.prolific.com/"}
+  - {name: Surge AI, category: ai_data_work, match: [surge ai, surgehq], source: "https://www.surgehq.ai/"}
+  - {name: micro1, category: ai_data_work, match: [micro1], source: "https://www.micro1.ai/"}
+  - {name: Clickworker, category: ai_data_work, match: [clickworker], source: "https://www.clickworker.com/"}
+  - {name: Mercor, category: ai_data_work, match: [mercor], source: "https://www.mercor.com/blog/1/"}
+  - {name: DataAnnotation, category: ai_data_work, match: [dataannotation], source: "https://www.dataannotation.tech/about-us"}
+  - {name: Alignerr, category: ai_data_work, match: [alignerr], source: "https://www.alignerr.com/about"}
+  - {name: Toloka, category: ai_data_work, match: [toloka], source: "https://toloka.ai/about"}
+  - {name: Invisible Technologies, category: ai_data_work, match: [invisible technologies, invisibletech], source: "https://invisibletech.ai/about"}
+  - {name: Handshake AI, category: ai_data_work, match: [handshake ai], source: "https://joinhandshake.com/fellowship-program/"}
+  - {name: Crossing Hurdles, category: ai_data_work, match: [crossing hurdles], source: "https://www.crossinghurdles.com/"}
+
+  # --- reposting_intermediary: reposts roles of other companies ---
+  - {name: Jobgether, category: reposting_intermediary, match: [jobgether], source: "https://jobgether.com/"}

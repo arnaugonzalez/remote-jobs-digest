@@ -90,7 +90,9 @@ Bundled examples (`rjs init --list-examples`): [`backend-ai-eu`](src/remote_jobs
 | `salary.floor` | `{EUR: 40000, USD: 60000}` |
 | `company.kind` | `product`, `any` or `consultancy` |
 | `company.consulting_companies` | Consultancies to drop. The package ships none: your call |
-| `company.staffing_platforms` | Talent marketplaces (Toptal, Upwork, Lemon.io…) whose posts are templates; a default list ships |
+| `company.skip_platforms` | Categories of the bundled platform list to drop: `talent_marketplace`, `freelance_marketplace`, `ai_data_work`, `reposting_intermediary` (default: all). `rjs platforms` shows every name and its source |
+| `company.allow_platforms` | Bundled names to keep anyway (e.g. `[Toptal]` if you want Toptal gigs) |
+| `company.staffing_platforms` | Your own extra platform names to drop |
 | `signals.negative` | Phrases that reject a job ("must reside in the US", "security clearance"…) |
 | `search.active_sources` | Which sources run |
 | `narrative` or `~/.config/rjs/profile.md` | Free text about you, read by the LLM |

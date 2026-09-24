@@ -108,7 +108,6 @@ REMOTE_BUT_AMERICAS = list(lexicon.REMOTE_BUT_NORTH_AMERICA)
 # ---------------------------------------------------------------------------
 ROLE_SIGNALS = list(_profile.role.role_signals)
 NON_ROLE_SIGNALS = list(_profile.role.non_role_signals)
-STAFFING_PLATFORMS = list(_profile.company.staffing_platforms)
 
 # ---------------------------------------------------------------------------
 # Seniority — derivado de profile.role / profile.experience.

@@ -21,6 +21,7 @@ core
   run       collect, filter and print today's digest (--no-ai: zero tokens)
   config    check | show your config
   boards    build | discover: grow the list of company ATS boards to scan
+  platforms list the bundled marketplaces / AI-data-work platforms and which you skip
   paths     print where config and data live
 
 apply extra (supervised pilot, pip install 'remote-jobs-digest[apply]')
@@ -69,6 +70,26 @@ def _print_paths() -> None:
         print(f"  {mark} {name:<9} {path}")
 
 
+def _print_platforms() -> None:
+    from remote_jobs_digest import platforms
+    from remote_jobs_digest.profile.loader import load_profile
+    from remote_jobs_digest.profile.types import ProfileError
+    try:
+        company = load_profile().company
+        skip, allow = company.skip_platforms, {a.lower() for a in company.allow_platforms}
+    except ProfileError:
+        skip, allow = platforms.CATEGORIES, set()
+        print("(no config yet: showing the defaults, every category skipped)\n")
+    for category in platforms.CATEGORIES:
+        state = "skipped" if category in skip else "kept"
+        print(f"{category} [{state}]")
+        for p in platforms.bundled():
+            if p.category == category:
+                mark = "·" if category not in skip or p.name.lower() in allow else "✗"
+                print(f"  {mark} {p.name:<22} {p.source}")
+    print("\nChange with company.skip_platforms / allow_platforms in your config.")
+
+
 def _require_config() -> None:
     from remote_jobs_digest.profile.types import ProfileError
     from remote_jobs_digest.profile.loader import load_profile
@@ -104,6 +125,9 @@ def main(argv: list[str] | None = None) -> None:
 
     if cmd == "paths":
         _print_paths()
+        return
+    if cmd == "platforms":
+        _print_platforms()
         return
     if cmd == "boards":
         if not rest or rest[0] not in ("build", "discover"):
