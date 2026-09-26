@@ -9,6 +9,7 @@ from __future__ import annotations
 import re
 
 from remote_jobs_digest import config, platforms
+from remote_jobs_digest.classifier import any_keyword
 from remote_jobs_digest.sources.base import Job
 
 # --- Salario --------------------------------------------------------------
@@ -80,13 +81,6 @@ def score_relevance(job: Job) -> None:
     job.relevance = 2 * len(title_hits) + len(tag_hits)
 
 
-def _kw_in(keyword: str, haystack: str) -> bool:
-    """Match con límites de palabra: 'ml' no debe casar con 'html' ni 'ai'
-    con 'email'. Las keywords multi-palabra pasan tal cual."""
-    return re.search(rf"(?<![a-z0-9]){re.escape(keyword)}(?![a-z0-9])",
-                     haystack) is not None
-
-
 def score_stack(job: Job) -> None:
     """Encaje ponderado 0-10 con el perfil (config.STACK_WEIGHTS, handoff §4).
 
@@ -100,8 +94,8 @@ def score_stack(job: Job) -> None:
     weak_hay = f" {job.title.lower()} {' '.join(job.tags).lower()} "
     score, hits = 0, []
     for weight, label, strong, weak in config.STACK_WEIGHTS:
-        if (any(_kw_in(kw, strong_hay) for kw in strong)
-                or any(_kw_in(kw, weak_hay) for kw in weak)):
+        if ((strong and any_keyword(tuple(strong)).search(strong_hay))
+                or (weak and any_keyword(tuple(weak)).search(weak_hay))):
             score += weight
             hits.append(label)
     # Con 4 categorías a peso 3 (backend_python/ai_llm/infra/typescript_node)

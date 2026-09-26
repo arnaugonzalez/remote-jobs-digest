@@ -3,6 +3,9 @@ full run() over fake sources."""
 
 from __future__ import annotations
 
+import os
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -74,3 +77,14 @@ def test_init_from_bundled_example_by_name(tmp_path, monkeypatch, capsys):
     assert "frontend-latam" in capsys.readouterr().out
     cli.main(["init", "--from", "frontend-latam"])
     assert "react" in (tmp_path / "config.yaml").read_text()
+
+
+@pytest.mark.parametrize("cmd", ["run", "boards discover"])
+def test_help_works_before_init(tmp_path, cmd):
+    # Subprocess: the module must be imported fresh, with no config on disk.
+    env = {k: v for k, v in os.environ.items() if not k.startswith("RJS_")}
+    env["RJS_HOME"] = str(tmp_path)
+    out = subprocess.run([sys.executable, "-m", "remote_jobs_digest", *cmd.split(), "--help"],
+                         env=env, capture_output=True, text=True)
+    assert out.returncode == 0, out.stderr
+    assert "usage:" in out.stdout

@@ -21,6 +21,7 @@ entrada (design/CODEBASE-DESIGN.md §6, fase 1b).
 from __future__ import annotations
 
 import re
+from functools import cache
 
 from remote_jobs_digest import platforms
 from remote_jobs_digest.profile import lexicon
@@ -69,11 +70,13 @@ def _num_to_int(num: str, k: str) -> int | None:
     return int(val)
 
 
-def _kw_in(keyword: str, haystack: str) -> bool:
-    """Match con límites de palabra: 'ml' no debe casar con 'html' ni 'ai'
-    con 'email'. Las keywords multi-palabra pasan tal cual."""
-    return re.search(rf"(?<![a-z0-9]){re.escape(keyword)}(?![a-z0-9])",
-                     haystack) is not None
+@cache
+def any_keyword(keywords: tuple[str, ...]) -> re.Pattern[str]:
+    """Any keyword, with word boundaries ('ml' must not hit 'html', nor 'ai'
+    'email'). One compiled alternation: a single pass over a long description
+    instead of one search per keyword."""
+    alts = "|".join(re.escape(k) for k in sorted(keywords, key=len, reverse=True))
+    return re.compile(rf"(?<![a-z0-9])(?:{alts})(?![a-z0-9])")
 
 
 def detect_years_required(job: Job) -> int | None:
@@ -199,8 +202,8 @@ class Classifier:
         weak_hay = f" {job.title.lower()} {' '.join(job.tags).lower()} "
         score, hits = 0, []
         for cat in stk.weighted:
-            if (any(_kw_in(kw, strong_hay) for kw in cat.strong)
-                    or any(_kw_in(kw, weak_hay) for kw in cat.weak)):
+            if ((cat.strong and any_keyword(tuple(cat.strong)).search(strong_hay))
+                    or (cat.weak and any_keyword(tuple(cat.weak)).search(weak_hay))):
                 score += cat.weight
                 hits.append(cat.label)
         job.stack_score, job.stack_hits = min(score, stk.score_cap), hits

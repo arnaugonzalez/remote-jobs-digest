@@ -8,7 +8,9 @@ from __future__ import annotations
 
 import importlib
 import inspect
+import os
 import sys
+from importlib.resources import files
 
 from remote_jobs_digest import __version__, paths
 
@@ -136,7 +138,10 @@ def main(argv: list[str] | None = None) -> None:
 
     if cmd in CORE:
         module, needs_config = CORE[cmd]
-        if needs_config and not {"-h", "--help"} & set(rest):
+        if needs_config and {"-h", "--help"} & set(rest) and not paths.config_file().exists():
+            # Modules read the profile on import; --help must work before `rjs init`.
+            os.environ["RJS_CONFIG"] = str(files("remote_jobs_digest") / "examples" / "backend-ai-eu.yaml")
+        elif needs_config:
             _require_config()
         _call(module, rest, f"rjs {cmd.replace('-', ' ')}")
         return
