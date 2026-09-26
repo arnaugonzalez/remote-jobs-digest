@@ -31,7 +31,7 @@ def load_profile(path: str | os.PathLike[str] | None = None, *,
     """
     config_path = Path(path) if path is not None else paths.config_file()
     if not config_path.exists():
-        raise ProfileError([(str(config_path),
+        raise ProfileError([(paths.display(config_path),
                              "no config file found - run `rjs init` "
                              "(or `rjs init --list-examples`)")])
 

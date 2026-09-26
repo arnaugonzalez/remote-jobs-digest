@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from remote_jobs_digest import cli, config_check
+from remote_jobs_digest import __version__, cli, config_check
 from remote_jobs_digest.sources.base import Job
 
 EXAMPLES = sorted((Path(__file__).parent.parent / "src" / "remote_jobs_digest" / "examples").glob("*.yaml"))
@@ -20,7 +20,7 @@ def test_help_and_version(capsys):
     cli.main(["--help"])
     assert "rjs init" not in capsys.readouterr().err
     cli.main(["--version"])
-    assert capsys.readouterr().out.strip() == "0.1.0"
+    assert capsys.readouterr().out.strip() == __version__
 
 
 def test_unknown_command_exits():

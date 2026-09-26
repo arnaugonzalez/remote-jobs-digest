@@ -57,6 +57,10 @@ path = "README.md"
 pattern = '\]\(docs/'
 replacement = '](https://raw.githubusercontent.com/arnaugonzalez/remote-jobs-digest/main/docs/'
 
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = '\]\((?!https?://|#|mailto:)([^)]+)\)'
+replacement = '](https://github.com/arnaugonzalez/remote-jobs-digest/blob/main/\1)'
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/remote_jobs_digest"]
 

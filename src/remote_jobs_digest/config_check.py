@@ -22,7 +22,7 @@ def check(path: str | None = None) -> bool:
     """True if the config is valid; otherwise prints each problem with its field path."""
     p = Path(path) if path else paths.config_file()
     if not p.exists():
-        print(f"✗ no config at {p}. Run `rjs init` "
+        print(f"✗ no config at {paths.display(p)}. Run `rjs init` "
               f"(or `rjs init --list-examples`).")
         return False
     try:
@@ -32,14 +32,14 @@ def check(path: str | None = None) -> bool:
             raise ProfileError([(str(p), "the YAML root must be a mapping")])
         Profile.from_mapping(raw)
     except ProfileError as exc:
-        print(f"✗ {p} is not valid:")
+        print(f"✗ {paths.display(p)} is not valid:")
         for field_path, msg in exc.problems:
             print(f"  · {field_path}: {msg}")
         return False
     except yaml.YAMLError as exc:
-        print(f"✗ {p}: invalid YAML ({exc})")
+        print(f"✗ {paths.display(p)}: invalid YAML ({exc})")
         return False
-    print(f"✓ {p} is valid.")
+    print(f"✓ {paths.display(p)} is valid.")
     return True
 
 

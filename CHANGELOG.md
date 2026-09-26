@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 — unreleased
+
+- PyPI page: README links to repo files (deploy templates, example profiles) now point to GitHub.
+- Config messages show paths as `~/...` like the rest of the CLI.
+
 ## 0.1.0 — 2026-09-26
 
 First public release.
