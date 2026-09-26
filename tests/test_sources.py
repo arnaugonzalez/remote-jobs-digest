@@ -67,3 +67,26 @@ def test_remoteok_skips_legal_notice(monkeypatch):
     first = json.loads((FIX / "remoteok.json").read_text())[0]
     assert "legal" in first
     assert len(remoteok.fetch()) == 3
+
+
+def _personio_xml(monkeypatch, body: str) -> list:
+    monkeypatch.setattr(ats, "http_get", lambda url, **kw: httpx.Response(
+        200, content=body.encode(), request=httpx.Request("GET", url)))
+    return ats._personio("Acme", "acme")
+
+
+def test_personio_xml(monkeypatch):
+    jobs = _personio_xml(monkeypatch, """<?xml version="1.0"?><workzag-jobs>
+      <position><id>7</id><name>Backend Engineer</name><office>Remote</office>
+        <jobDescriptions><jobDescription><value>Python APIs</value></jobDescription></jobDescriptions>
+      </position></workzag-jobs>""")
+    assert [(j.title, j.url, j.location) for j in jobs] == [
+        ("Backend Engineer", "https://acme.jobs.personio.de/job/7", "Remote")]
+
+
+def test_personio_rejects_xml_entities(monkeypatch):
+    from defusedxml import EntitiesForbidden
+    with pytest.raises(EntitiesForbidden):
+        _personio_xml(monkeypatch, """<?xml version="1.0"?>
+          <!DOCTYPE x [<!ENTITY a "aaaaaaaaaa"><!ENTITY b "&a;&a;&a;&a;&a;">]>
+          <workzag-jobs><position><name>&b;</name></position></workzag-jobs>""")

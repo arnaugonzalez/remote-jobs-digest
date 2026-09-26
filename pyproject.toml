@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "remote-jobs-digest"
-version = "0.1.0"
-description = "A daily digest of remote jobs you are actually eligible for: ~11k public ATS boards and remote job APIs, filtered by a declarative profile."
+dynamic = ["version"]
+description = "A daily digest of remote jobs you are actually eligible for: company career boards (Greenhouse, Ashby, Lever…) and remote job APIs, filtered by a declarative profile."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -28,6 +28,7 @@ dependencies = [
   "feedparser>=6.0",
   "pyyaml>=6.0.1",
   "beautifulsoup4>=4.12",
+  "defusedxml>=0.7.1",
 ]
 
 [project.optional-dependencies]
@@ -42,6 +43,9 @@ rjs = "remote_jobs_digest.cli:main"
 [project.urls]
 Homepage = "https://github.com/arnaugonzalez/remote-jobs-digest"
 Issues = "https://github.com/arnaugonzalez/remote-jobs-digest/issues"
+
+[tool.hatch.version]
+path = "src/remote_jobs_digest/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/remote_jobs_digest"]

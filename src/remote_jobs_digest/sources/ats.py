@@ -26,9 +26,10 @@ from remote_jobs_digest import paths
 import json
 import os
 import re
-import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
+
+from defusedxml import ElementTree as ET
 
 from remote_jobs_digest import config
 from .base import Job, http_get, log

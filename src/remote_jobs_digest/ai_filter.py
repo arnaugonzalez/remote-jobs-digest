@@ -60,7 +60,7 @@ def _endpoint(prefix: str) -> tuple[str, str, str]:
 
 
 def _is_local(base: str) -> bool:
-    return any(h in base for h in ("localhost", "127.0.0.1", "0.0.0.0"))
+    return any(h in base for h in ("localhost", "127.0.0.1", "0.0.0.0"))  # nosec B104: string check, no bind
 
 
 def _configured(prefix: str) -> bool:

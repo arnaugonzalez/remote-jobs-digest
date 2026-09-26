@@ -116,7 +116,8 @@ def send_telegram(msg: str) -> bool:
                 r = c.post(url, json=payload)
             r.raise_for_status()
     except httpx.HTTPError as exc:
-        log(f"Telegram failed: {type(exc).__name__}: {exc}")
+        # httpx puts the request URL in the message, and the URL holds the token.
+        log(f"Telegram failed: {type(exc).__name__}: {str(exc).replace(token, '<token>')}")
         return False
     log("digest sent to Telegram")
     return True
