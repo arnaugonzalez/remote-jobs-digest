@@ -339,8 +339,8 @@ def _targets() -> list[tuple[str, str, str]]:
                 seen.add((kind, slug))
                 targets.append((c["name"], kind, slug))
     else:
-        log(f"  ats: sin dataset en {COMPANIES_JSON} "
-            f"(run `rjs boards build`) — solo CURATED")
+        log(f"  ats: no board dataset at {paths.display(COMPANIES_JSON)} "
+            f"(run `rjs boards build`); using the 30 curated boards only")
 
     if os.getenv("RJS_ATS_RETRY_DEAD") == "1":
         return targets
@@ -368,7 +368,7 @@ def _targets() -> list[tuple[str, str, str]]:
 
 def fetch() -> list[Job]:
     targets = _targets()
-    log(f"ats: consultando {len(targets)} boards...")
+    log(f"ats: querying {len(targets)} boards...")
     jobs: list[Job] = []
     ok = dead_count = 0
     dead = _load_dead()
@@ -403,5 +403,5 @@ def fetch() -> list[Job]:
             jobs.extend(got)
     if dead_changed:
         _save_dead(dead)
-    log(f"ats: {len(jobs)} ofertas de {ok} boards vivos ({dead_count} caídos)")
+    log(f"ats: {len(jobs)} jobs from {ok} live boards ({dead_count} dead)")
     return jobs

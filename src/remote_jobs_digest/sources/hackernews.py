@@ -54,7 +54,7 @@ def _find_thread_id() -> int | None:
         })
         hits = r.json().get("hits", []) or []
     except Exception as exc:  # noqa: BLE001
-        log(f"  hn: búsqueda falló: {exc}")
+        log(f"  hn: search failed: {exc}")
         return None
     best, best_ts = None, 0
     for h in hits:
@@ -67,7 +67,7 @@ def _find_thread_id() -> int | None:
     if not best:
         return None
     when = datetime.fromtimestamp(best_ts, timezone.utc).strftime("%Y-%m")
-    log(f"  hn: hilo {best} ({when})")
+    log(f"  hn: thread {best} ({when})")
     return int(best)
 
 
@@ -87,13 +87,13 @@ def _best_url(raw_html: str) -> str:
 def fetch() -> list[Job]:
     thread_id = _find_thread_id()
     if not thread_id:
-        log("hackernews: no encontré el hilo")
+        log("hackernews: monthly thread not found")
         return []
     try:
         r = http_get(ITEM_URL.format(id=thread_id))
         children = r.json().get("children", []) or []
     except Exception as exc:  # noqa: BLE001
-        log(f"hackernews: no pude leer el hilo: {exc}")
+        log(f"hackernews: could not read the thread: {exc}")
         return []
 
     jobs: list[Job] = []
@@ -118,5 +118,5 @@ def fetch() -> list[Job]:
             location=location or "Remote", description=text[:4000],
             posted_date=c.get("created_at", "") or "",
             tags=["hn-who-is-hiring"]))
-    log(f"hackernews: {len(jobs)} ofertas del hilo mensual")
+    log(f"hackernews: {len(jobs)} jobs from the monthly thread")
     return jobs

@@ -258,8 +258,8 @@ def main() -> None:
               if not ((b["ats_type"], b["ats_slug"]) in b_seen
                       or b_seen.add((b["ats_type"], b["ats_slug"])))]
 
-    print(f"Probando {len(names)} empresas (slug adivinado) + "
-          f"{len(boards)} boards conocidos (verificación directa) contra "
+    print(f"Probing {len(names)} companies (guessed slug) + "
+          f"{len(boards)} known boards (direct check) against "
           f"{len(PROBES)} ATS...", file=sys.stderr)
 
     found: list[dict] = []
@@ -284,7 +284,7 @@ def main() -> None:
             known.add((res["ats_type"], res["ats_slug"]))
             found.append(res)
             print(f"  ✓ {res['ats_type']:11} {res['ats_slug']:26} "
-                  f"{res['n_jobs']:>4} ofertas  ({res['name']})",
+                  f"{res['n_jobs']:>4} jobs  ({res['name']})",
                   file=sys.stderr)
 
     merged = existing_found + found
@@ -294,8 +294,8 @@ def main() -> None:
         json.dump(merged, f, indent=2, ensure_ascii=False)
     total_new = sum(r["n_jobs"] for r in found)
     total = sum(r["n_jobs"] for r in merged)
-    print(f"\n  {len(found)} boards nuevos ({total_new:,} ofertas) · "
-          f"{len(merged)} boards totales ({total:,} ofertas)")
+    print(f"\n  {len(found)} new boards ({total_new:,} jobs) · "
+          f"{len(merged)} boards in total ({total:,} jobs)")
     print(f"  💾 {FOUND}")
 
 

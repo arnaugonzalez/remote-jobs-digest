@@ -31,7 +31,7 @@ def fetch() -> list[Job]:
         try:
             raw = _fetch_term(term)
         except Exception as exc:  # noqa: BLE001
-            log(f"  remotive term={term!r} falló: {exc}")
+            log(f"  remotive term={term!r} failed: {exc}")
             continue
         for item in raw:
             url = item.get("url", "")
@@ -51,5 +51,5 @@ def fetch() -> list[Job]:
                 salary_text=(item.get("salary") or "").strip(),
                 tags=[t for t in (item.get("tags") or []) if isinstance(t, str)],
             ))
-    log(f"remotive: {len(jobs)} ofertas")
+    log(f"remotive: {len(jobs)} jobs")
     return jobs

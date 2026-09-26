@@ -76,3 +76,9 @@ def load_env_file() -> None:
         key, _, value = line.partition("=")
         key = key.strip().removeprefix("export ").strip()
         os.environ.setdefault(key, value.strip().strip('"').strip("'"))
+
+
+def display(path: str | os.PathLike) -> str:
+    """Path for messages: $HOME shown as ~, so logs and demos stay short."""
+    p, h = str(path), str(Path.home())
+    return "~" + p[len(h):] if p == h or p.startswith(h + os.sep) else p

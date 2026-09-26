@@ -46,7 +46,7 @@ def fetch() -> list[Job]:
             content = http_get(url).text
             feed = feedparser.parse(content)
         except Exception as exc:  # noqa: BLE001
-            log(f"  wwr {category} falló: {exc}")
+            log(f"  wwr {category} failed: {exc}")
             continue
         for entry in feed.entries:
             link = entry.get("link", "")
@@ -74,5 +74,5 @@ def fetch() -> list[Job]:
                 employment_type="",
                 tags=[category],
             ))
-    log(f"weworkremotely: {len(jobs)} ofertas")
+    log(f"weworkremotely: {len(jobs)} jobs")
     return jobs

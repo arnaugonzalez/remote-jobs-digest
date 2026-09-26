@@ -45,5 +45,5 @@ def fetch() -> list[Job]:
             salary_text=(f"${smin:,}–${smax:,}" if smin and smax else ""),
             tags=[t for t in (item.get("tags") or []) if isinstance(t, str)],
         ))
-    log(f"remoteok: {len(jobs)} ofertas")
+    log(f"remoteok: {len(jobs)} jobs")
     return jobs

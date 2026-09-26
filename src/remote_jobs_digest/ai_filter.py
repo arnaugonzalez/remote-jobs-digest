@@ -269,11 +269,11 @@ def score_jobs(jobs: list[Job]) -> bool:
         else:
             to_score.append(job)
     if n_cached:
-        log(f"IA: {n_cached} ofertas ya puntuadas (caché)")
+        log(f"LLM: {n_cached} jobs already scored (cache)")
     if not to_score:
         return n_cached > 0
 
-    log(f"IA ({config.AI_MODEL}): puntuando {len(to_score)} ofertas...")
+    log(f"LLM ({config.AI_MODEL}): scoring {len(to_score)} jobs...")
     n = config.AI_BATCH_SIZE
     scored = 0
     n_batches = (len(to_score) + n - 1) // n
@@ -292,8 +292,8 @@ def score_jobs(jobs: list[Job]) -> bool:
             _save_ai_cache(cache)  # persistido tras cada lote: un fallo a
             # medias no pierde lo ya puntuado ese mismo run.
         except Exception as exc:  # noqa: BLE001 — la IA nunca tumba el run
-            log(f"  lote {idx + 1}/{n_batches} falló: {exc}")
+            log(f"  batch {idx + 1}/{n_batches} failed: {exc}")
         if idx + 1 < n_batches:    # pequeño respiro entre lotes (rate limit)
             time.sleep(config.AI_BATCH_DELAY)
-    log(f"IA: {scored} ofertas puntuadas")
+    log(f"LLM: {scored} jobs scored")
     return scored > 0 or n_cached > 0

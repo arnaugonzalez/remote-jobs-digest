@@ -12,8 +12,9 @@ import argparse
 import json
 import os
 import re
+from pathlib import Path
 
-from remote_jobs_digest import config
+from remote_jobs_digest import config, paths
 from remote_jobs_digest import filters
 from remote_jobs_digest import exporters
 from remote_jobs_digest import notify
@@ -109,19 +110,18 @@ def run(source_names: list[str], send_telegram: bool, top_n: int,
     stats["digest_path"] = str(notify.write_digest(digest))
 
     print()
-    print(f"  ✅ MATCH (APTA):     {stats['apta']}")
-    print(f"  ⚠️  REVIEW (REVISAR): {stats['revisar']}")
-    print(f"  ❌ REJECTED:         {stats['descartada']}")
+    print(f"  ✅ match:     {stats['apta']}")
+    print(f"  ⚠️  review:    {stats['revisar']}")
+    print(f"  ❌ rejected:  {stats['descartada']}")
     print(f"  🚫 management/staff+ dropped (stack matched): {stats['mgmt_dropped']}")
     print(f"  🏢 consultancy dropped (stack matched):       {stats['consulting_dropped']}")
     print(f"  ⚠️  with exclusivity clause: {stats['exclusivity']}")
     print(f"  📋 final list (IC, stack >= {config.MIN_STACK_SCORE}): {stats['filtered']}")
     print(f"  🤖 LLM: {'on (' + config.AI_MODEL + ')' if ai_used else 'off'}")
-    print(f"\n  💾 {stats['csv_path']}")
-    print(f"  💾 {stats['raw_path']}")
-    print(f"  💾 {stats['digest_path']}")
+    saved = [Path(stats[k]) for k in ("csv_path", "raw_path", "digest_path")]
+    print(f"\n  💾 {paths.display(saved[0].parent)}/  {'  '.join(p.name for p in saved)}")
     if not quiet:
-        print("\n" + digest)
+        print("\n" + notify.for_terminal(digest))
 
     if send_telegram and notify.telegram_configured():
         notify.send_telegram(digest)

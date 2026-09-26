@@ -9,7 +9,7 @@ from __future__ import annotations
 import re
 
 from remote_jobs_digest import config, platforms
-from remote_jobs_digest.classifier import any_keyword
+from remote_jobs_digest.classifier import TITLE_LOC_RE, any_keyword
 from remote_jobs_digest.sources.base import Job
 
 # --- Salario --------------------------------------------------------------
@@ -160,7 +160,8 @@ def geo_verdict(job: Job) -> str:
     # Normalizamos separadores: los ATS escriben la misma restricción como
     # "Remote - US", "Remote-US", "Remote (US)" y "Remote, US". Colapsarlos a
     # espacios evita mantener una variante por cada estilo de guion.
-    loc_raw = (job.location or "").lower()
+    title_loc = [a or b for a, b in TITLE_LOC_RE.findall(job.title)]
+    loc_raw = ", ".join(filter(None, [job.location, *title_loc])).lower()
     loc = re.sub(r"[^a-z0-9]+", " ", loc_raw).strip()
     text = f"{job.title} {job.description}".lower()
 
@@ -377,25 +378,25 @@ def classify(job: Job) -> None:
 
     # --- Eliminatorios --------------------------------------------------
     if neg:
-        job.verdict, job.reason = "DESCARTADA", f"Señales negativas: {neg[:3]}"
+        job.verdict, job.reason = "DESCARTADA", f"Negative signals: {neg[:3]}"
         return
     if job.level == "overqualified":
         job.verdict = "DESCARTADA"
-        job.reason = "Senior/lead/gestión — el perfil es mid"
+        job.reason = "Senior/lead/management: above the target level"
         return
     if job.level == "underqualified":
-        job.verdict, job.reason = "DESCARTADA", "Beca/prácticas"
+        job.verdict, job.reason = "DESCARTADA", "Internship/trainee"
         return
     if job.years_required and job.years_required > config.MAX_YEARS_REQUIRED:
         job.verdict = "DESCARTADA"
-        job.reason = f"Pide {job.years_required}+ años (máx. {config.MAX_YEARS_REQUIRED})"
+        job.reason = f"Asks {job.years_required}+ years (max {config.MAX_YEARS_REQUIRED})"
         return
     if not is_engineering_role(job):
-        job.verdict, job.reason = "DESCARTADA", "No es un rol de ingeniería"
+        job.verdict, job.reason = "DESCARTADA", "Not an engineering role"
         return
     if any(d in job.url.lower() for d in config.PAYWALLED_DOMAINS):
         job.verdict = "DESCARTADA"
-        job.reason = "Portal de pago: no se puede aplicar sin suscripción"
+        job.reason = "Paid portal: cannot apply without a subscription"
         return
     if hit := platform_match(job):
         job.verdict = "DESCARTADA"
@@ -403,11 +404,11 @@ def classify(job: Job) -> None:
         return
     if job.is_consulting:
         job.verdict = "DESCARTADA"
-        job.reason = "Consultoría/outsourcing — el modelo del que se sale (§4)"
+        job.reason = "Consultancy/outsourcing: you want a product company"
         return
     if job.salary_flag == "below_floor":
         job.verdict = "DESCARTADA"
-        job.reason = f"Bajo el suelo: {job.sort_salary:,} {job.salary_currency}"
+        job.reason = f"Below salary floor: {job.sort_salary:,} {job.salary_currency}"
         return
 
     # --- Geografía: solo cuando el puesto en sí ya ha pasado ------------
@@ -416,20 +417,20 @@ def classify(job: Job) -> None:
     # con solo que el anuncio dijera "work from anywhere".
     if job.geo == "onsite":
         job.verdict = "DESCARTADA"
-        job.reason = (f"Presencial fuera de España ({job.location!r}): "
-                      f"implica mudarse")
+        job.reason = (f"On-site outside your area ({job.location!r}): "
+                      f"would mean relocating")
         return
     if job.geo == "us_only":
         strong = [s for s in config.STRONG_INTL_SIGNALS if s in text]
         if not strong:
             job.verdict = "DESCARTADA"
-            job.reason = f"Solo EE.UU./Norteamérica: {job.location!r}"
+            job.reason = f"US/North America only: {job.location!r}"
             return
         # Dice explícitamente que contrata fuera: viable como contractor con
         # overlap parcial, pero nunca APTA automática (§4 lo marca como ⚠️).
         job.verdict = "REVISAR"
-        job.reason = (f"US pero contrata fuera ({strong[:2]}) — "
-                      f"viable como contractor; verificar overlap horario")
+        job.reason = (f"US-based but hires abroad ({strong[:2]}): "
+                      f"viable as a contractor; check timezone overlap")
         return
     # Rango, no igualdad exacta: con '==' esto solo era correcto porque hoy
     # STRETCH_YEARS == MAX_YEARS_REQUIRED (5 == 5) por casualidad. Si algún
@@ -448,40 +449,40 @@ def classify(job: Job) -> None:
     if job.stack_hits:
         bits.append("+".join(job.stack_hits))
     if job.is_ai_role:
-        bits.append("🤖 rol AI")
+        bits.append("🤖 AI role")
     if job.years_required:
         lo, hi = config.IDEAL_YEARS
         mark = "✔" if lo <= job.years_required <= hi else ""
-        bits.append(f"pide {job.years_required} años{mark}")
+        bits.append(f"asks {job.years_required} years{mark}")
     else:
-        bits.append("años no especificados")
+        bits.append("years not stated")
     if job.salary_flag == "ok":
-        bits.append(f"salario {job.sort_salary:,} {job.salary_currency} ✔")
+        bits.append(f"salary {job.sort_salary:,} {job.salary_currency} ✔")
     elif job.salary_flag == "low":
-        bits.append(f"salario justo ({job.sort_salary:,} {job.salary_currency})")
+        bits.append(f"salary tight ({job.sort_salary:,} {job.salary_currency})")
     else:
-        bits.append("sin transparencia salarial")
+        bits.append("no salary info")
     if job.has_exclusivity:
-        bits.append("⚠ cláusula de exclusividad")
+        bits.append("⚠ exclusivity clause")
     bits.append(f"geo {job.geo}" + (f" {pos[:2]}" if pos else ""))
 
     # Solo 'ok' habilita APTA. Los dos casos intermedios son viables pero
     # exigen una decisión personal, así que van a REVISAR con el motivo claro.
     if job.geo == "remote_other_eu":
         job.verdict = "REVISAR"
-        bits.append(f"⚠ remoto pero exige residir en {job.location!r}")
+        bits.append(f"⚠ remote, but requires living in {job.location!r}")
         job.reason = "; ".join(bits)
         return
     if job.geo == "onsite_local":
         job.verdict = "REVISAR"
-        bits.append(f"⚠ presencial/híbrido en tu zona ({job.location!r}), "
-                    f"no 100% remoto")
+        bits.append(f"⚠ on-site/hybrid in your area ({job.location!r}), "
+                    f"not fully remote")
         job.reason = "; ".join(bits)
         return
     if job.geo == "remote_unclear":
         job.verdict = "REVISAR"
-        bits.append(f"⚠ remoto sin región clara ({job.location!r}): "
-                    f"verificar si incluye España/UE")
+        bits.append(f"⚠ remote, no clear region ({job.location!r}): "
+                    f"check that it includes you")
         job.reason = "; ".join(bits)
         return
 
@@ -492,7 +493,7 @@ def classify(job: Job) -> None:
     else:
         job.verdict = "REVISAR"
         if job.stack_score < config.MIN_STACK_SCORE:
-            bits.append("stack por debajo del umbral")
+            bits.append("stack below threshold")
     job.reason = "; ".join(bits)
 
 

@@ -8,6 +8,8 @@ Telegram messages stay under its 4096-char limit by capping at DIGEST_TOP_N.
 from __future__ import annotations
 
 import os
+import re
+import sys
 from pathlib import Path
 
 import httpx
@@ -40,13 +42,19 @@ def _fmt_salary(job: Job) -> str:
     return "salary n/a"
 
 
+def _short(text: str, n: int) -> str:
+    if len(text) <= n:
+        return text
+    return text[:n].rsplit(" ", 1)[0].rstrip(" -–—,(|") + "…"
+
+
 def build_digest(filtered: list[Job], stats: dict) -> str:
     if not filtered:
         return (f"remote-jobs-digest: 0 matching jobs today "
                 f"(out of {stats['total']} collected).")
     top = filtered[:config.DIGEST_TOP_N]
     lines = [
-        f"💼 *Remote jobs digest* — {stats['filtered']} match, "
+        f"💼 *Remote jobs digest* — {stats['filtered']} shortlisted, "
         f"🆕 {stats.get('new_filtered', 0)} new "
         f"(out of {stats['total']} collected)",
         f"🚫 {stats['mgmt_dropped']} management/staff+ · "
@@ -56,10 +64,10 @@ def build_digest(filtered: list[Job], stats: dict) -> str:
     ]
     for i, j in enumerate(top, 1):
         title = (("🆕 " if j.is_new else "")
-                 + ("⚡ " if j.easy_apply else "") + j.title[:54])
+                 + ("⚡ " if j.easy_apply else "") + _short(j.title, 54))
         company = (j.company or "?")[:28]
-        lvl = (j.ai_level or j.level or "?").upper()
-        meta = f"{lvl} · stack {j.stack_score}/10"
+        lvl = j.ai_level or j.level
+        meta = (f"{lvl.upper()} · " if lvl and lvl != "unknown" else "") + f"stack {j.stack_score}/10"
         if j.ai_fit is not None:
             meta += f" · fit {j.ai_fit}/10"
         if j.has_exclusivity:
@@ -72,6 +80,12 @@ def build_digest(filtered: list[Job], stats: dict) -> str:
             lines.append(f"   💬 {j.ai_reason}")
         lines.append(f"   {j.url} (via {source_label(j.source)})")
     return "\n".join(lines)[:3900]
+
+
+def for_terminal(msg: str) -> str:
+    """Telegram's *bold* as ANSI bold on a TTY; plain text when piped."""
+    bold = ("\033[1m", "\033[0m") if sys.stdout.isatty() else ("", "")
+    return re.sub(r"\*([^*\n]+)\*", rf"{bold[0]}\1{bold[1]}", msg)
 
 
 def write_digest(msg: str) -> Path:

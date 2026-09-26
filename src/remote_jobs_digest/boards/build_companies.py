@@ -415,10 +415,10 @@ def main() -> None:
     n_desc = sum(1 for c in companies if c.verdict == "DESCARTADA")
     n_es = sum(1 for c in companies if c.hires_spain)
     n_ats = sum(1 for c in companies if c.ats_type)
-    print(f"\n  Total empresas únicas: {len(companies)}")
+    print(f"\n  Unique companies: {len(companies)}")
     print(f"  ✅ APTA {n_apta} · ⚠️ REVISAR {n_rev} · ❌ DESCARTADA {n_desc}")
-    print(f"  🇪🇸 contratan en España: {n_es}")
-    print(f"  🔌 con ATS consultable por API: {n_ats}")
+    print(f"  🇪🇸 hire in Spain (remote-es list): {n_es}")
+    print(f"  🔌 with an ATS queryable by API: {n_ats}")
     print(f"\n  💾 {json_path}\n  💾 {csv_path}")
 
 

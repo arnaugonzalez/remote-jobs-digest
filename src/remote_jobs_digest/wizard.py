@@ -17,6 +17,7 @@ from typing import Callable
 
 import yaml
 
+from remote_jobs_digest import paths
 from remote_jobs_digest.profile.schema import FIELDS, FieldSpec
 from remote_jobs_digest.profile.types import Profile, ProfileError
 
@@ -230,7 +231,7 @@ def run(io: WizardIO, *, dest: Path, base: Profile | None = None,
     except OSError:
         pass
 
-    io.say(f"✓ wrote {dest}. Next: rjs run --no-ai")
+    io.say(f"✓ wrote {paths.display(dest)}. Next: rjs run --no-ai")
     return profile
 
 
@@ -314,7 +315,7 @@ def main(argv: list[str] | None = None) -> None:
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(args.from_file, dest)
         dest.chmod(0o600)
-        print(f"✓ wrote {dest}. Next: rjs run --no-ai")
+        print(f"✓ wrote {paths.display(dest)}. Next: rjs run --no-ai")
         return
 
     base = None

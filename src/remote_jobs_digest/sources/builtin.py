@@ -51,7 +51,7 @@ def fetch() -> list[Job]:
         try:
             r = http_get(LIST_URL, params={"page": page})
         except Exception as exc:  # noqa: BLE001
-            log(f"  builtin page={page} falló: {exc}")
+            log(f"  builtin page={page} failed: {exc}")
             continue
         got = _parse_page(r.text)
         if not got:
@@ -65,5 +65,5 @@ def fetch() -> list[Job]:
             new += 1
         if new == 0:
             break  # misma página repetida: fin de la paginación real
-    log(f"builtin: {len(jobs)} ofertas")
+    log(f"builtin: {len(jobs)} jobs")
     return jobs

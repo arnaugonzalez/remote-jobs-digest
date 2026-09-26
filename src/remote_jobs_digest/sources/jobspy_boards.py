@@ -80,14 +80,14 @@ def _fetch_site(site: str) -> list[Job]:
                     verbose=0,
                 )
             except Exception as exc:  # noqa: BLE001 — una query caída no mata la fuente
-                log(f"  {site} q={term!r} país={country}: {exc}")
+                log(f"  {site} q={term!r} country={country}: {exc}")
                 continue
             for row in df.to_dict("records"):
                 job = _row_to_job(site, row)
                 if job and job.url not in seen:
                     seen.add(job.url)
                     jobs.append(job)
-    log(f"{site}: {len(jobs)} ofertas")
+    log(f"{site}: {len(jobs)} jobs")
     return jobs
 
 

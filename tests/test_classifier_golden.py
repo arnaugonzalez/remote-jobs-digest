@@ -60,3 +60,26 @@ def test_cobertura_snapshot_completa():
         f"desincronizado — en cases.py y no en snapshot.json: "
         f"{ids_casos - ids_snapshot}; en snapshot.json y no en cases.py: "
         f"{ids_snapshot - ids_casos}")
+
+
+@pytest.mark.parametrize("title,geo", [
+    ("Open-Source Machine Learning Engineer - US Remote", "us_only"),
+    ("Machine Learning Engineer - EMEA Remote", "ok"),
+    ("Backend Engineer (Europe)", "ok"),
+    ("Backend Engineer - Platform", "remote_unclear"),
+])
+def test_region_in_title_when_location_is_bare_remote(title, geo):
+    job = Job(source="t", title=title, company="c", url="https://x.test/1",
+              location="Remote", description="")
+    assert CLF.geo_verdict(job) == geo
+
+
+@pytest.mark.parametrize("title,geo", [
+    ("Open-Source Machine Learning Engineer - US Remote", "us_only"),
+    ("Machine Learning Engineer - EMEA Remote", "ok"),
+])
+def test_run_path_reads_region_in_title(title, geo):
+    from remote_jobs_digest import filters
+    job = Job(source="t", title=title, company="c", url="https://x.test/1",
+              location="Remote", description="")
+    assert filters.geo_verdict(job) == geo

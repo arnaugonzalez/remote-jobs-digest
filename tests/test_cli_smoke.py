@@ -88,3 +88,11 @@ def test_help_works_before_init(tmp_path, cmd):
                          env=env, capture_output=True, text=True)
     assert out.returncode == 0, out.stderr
     assert "usage:" in out.stdout
+
+
+def test_paths_display_contracts_home(monkeypatch, tmp_path):
+    from remote_jobs_digest import paths
+    monkeypatch.setenv("HOME", str(tmp_path))
+    assert paths.display(tmp_path / "a" / "b.yaml") == "~/a/b.yaml"
+    assert paths.display(f"{tmp_path}x/c") == f"{tmp_path}x/c"
+    assert paths.display("/etc/rjs") == "/etc/rjs"

@@ -43,7 +43,7 @@ def fetch() -> list[Job]:
         content = http_get(RSS_URL).text
         feed = feedparser.parse(content)
     except Exception as exc:  # noqa: BLE001
-        log(f"  nodesk falló: {exc}")
+        log(f"  nodesk failed: {exc}")
         return []
     jobs: list[Job] = []
     for entry in feed.entries:
@@ -60,5 +60,5 @@ def fetch() -> list[Job]:
             description=_strip_html(entry.get("summary", "")),
             posted_date=entry.get("published", "") or "",
         ))
-    log(f"nodesk: {len(jobs)} ofertas")
+    log(f"nodesk: {len(jobs)} jobs")
     return jobs

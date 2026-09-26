@@ -29,7 +29,7 @@ def fetch() -> list[Job]:
     try:
         raw = http_get(API_URL).json()
     except Exception as exc:  # noqa: BLE001
-        log(f"  workingnomads falló: {exc}")
+        log(f"  workingnomads failed: {exc}")
         return []
     jobs: list[Job] = []
     for item in raw or []:
@@ -47,5 +47,5 @@ def fetch() -> list[Job]:
             posted_date=item.get("pub_date", "") or "",
             tags=[t.strip() for t in tags_raw.split(",") if t.strip()],
         ))
-    log(f"workingnomads: {len(jobs)} ofertas")
+    log(f"workingnomads: {len(jobs)} jobs")
     return jobs

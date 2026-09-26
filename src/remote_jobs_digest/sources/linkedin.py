@@ -177,17 +177,17 @@ def _enrich_descriptions(jobs: list[Job]) -> None:
                 errors = 0
             except Exception as exc:  # noqa: BLE001
                 errors += 1
-                log(f"  linkedin: detalle de {job.title[:40]!r} falló: {exc}")
+                log(f"  linkedin: detail for {job.title[:40]!r} failed: {exc}")
                 break
             time.sleep(config.LINKEDIN_DELAY)
             if job.description:
                 enriched += 1
                 break
         if errors >= 3:
-            log("  linkedin: 3 detalles seguidos fallando; paro de "
-                "enriquecer (¿rate limit?)")
+            log("  linkedin: 3 details failed in a row; "
+                "stopping enrichment (rate limit?)")
             break
-    log(f"  linkedin: {enriched}/{len(cands)} detalles con descripción")
+    log(f"  linkedin: {enriched}/{len(cands)} details with description")
 
 
 def fetch() -> list[Job]:
@@ -215,8 +215,8 @@ def fetch() -> list[Job]:
                         log(f"  linkedin q={term!r} loc={location!r} "
                             f"easy={easy} start={start}: {exc}")
                         if errors >= 3:
-                            log("  linkedin: 3 errores seguidos; corto la "
-                                "fuente (me quedo con lo recolectado)")
+                            log("  linkedin: 3 errors in a row; stopping the "
+                                "source (keeping what was collected)")
                             aborted = True
                         break
                     if not cards:
@@ -234,7 +234,7 @@ def fetch() -> list[Job]:
 
     jobs = list(by_url.values())
     n_easy = sum(1 for j in jobs if j.easy_apply)
-    log(f"linkedin: {len(jobs)} ofertas ({n_easy} Easy Apply)")
+    log(f"linkedin: {len(jobs)} jobs ({n_easy} Easy Apply)")
     if jobs and not aborted:
         _enrich_descriptions(jobs)
     return jobs

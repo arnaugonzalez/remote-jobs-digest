@@ -6,7 +6,7 @@
 ![python](https://img.shields.io/badge/python-3.11%20|%203.12%20|%203.13-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
-<!-- demo.gif: `rjs run --no-ai` ending on the digest (record with vhs, ≤20 s) -->
+![rjs init, then rjs run --no-ai: 4,847 jobs collected from 7 sources, 32 shortlisted, top 3 printed](https://raw.githubusercontent.com/arnaugonzalez/remote-jobs-digest/main/docs/demo.gif)
 
 "Remote" on a job board often means *remote, if you live in California*. rjs reads the whole
 posting and keeps the ones that fit **where you live**, the years you have, your stack and your salary
@@ -26,11 +26,11 @@ A first run takes under a minute. It prints a summary and the digest, and writes
 `digest_latest.md` to the data dir (`rjs paths` shows where).
 
 ```
-💼 Remote jobs digest — 9 match, 🆕 9 new (out of 4853 collected)
+💼 Remote jobs digest — 9 shortlisted, 🆕 9 new (out of 4853 collected)
 🚫 173 management/staff+ · 🏢 4 consultancy · ⚠️ 44 to review
 
 1. 🆕 Frontend Web Application Developer — KoboToolbox
-   [UNKNOWN · stack 3/10] · 💰 90,000–105,000 USD
+   [stack 3/10] · 💰 90,000–105,000 USD
    https://remotive.com/remote-jobs/... (via Remotive)
 ```
 
@@ -141,7 +141,9 @@ automating applications can break job sites' terms. Use them as drafts.
   Kubernetes can reach a Go profile. The LLM pass, or a finer `stack.weighted` table, fixes most of it.
 - The rules are tuned for software roles; other fields need your own stack table and signals.
 - Location matching is text matching. Unusual phrasings end up in REVIEW, which is the point.
-- Code comments and some logs are in Spanish; the CLI and docs are English. PRs welcome.
+- Some code comments are in Spanish; the CLI, logs, output and docs of the core are English. The
+  CSV `verdict` column keeps its original values (`APTA` = match, `REVISAR` = review,
+  `DESCARTADA` = rejected). PRs welcome.
 - Linux and macOS. Windows is untested.
 
 ## Roadmap

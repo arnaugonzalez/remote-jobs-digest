@@ -87,5 +87,5 @@ def http_get(url: str, *, params: dict | None = None,
                 return r
         except Exception as exc:  # noqa: BLE001 — resiliencia deliberada
             last_exc = exc
-            log(f"  intento {attempt + 1}/{retries + 1} falló para {url}: {exc}")
+            log(f"  attempt {attempt + 1}/{retries + 1} failed for {url}: {exc}")
     raise last_exc  # type: ignore[misc]
