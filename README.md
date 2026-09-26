@@ -6,7 +6,7 @@
 ![python](https://img.shields.io/badge/python-3.11%20|%203.12%20|%203.13-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
-![rjs init, then rjs run --no-ai: 4,847 jobs collected from 7 sources, 32 shortlisted, top 3 printed](https://raw.githubusercontent.com/arnaugonzalez/remote-jobs-digest/main/docs/demo.gif)
+![rjs init, then rjs run --no-ai: 4,847 jobs collected from 7 sources, 32 shortlisted, top 3 printed](docs/demo.gif)
 
 "Remote" on a job board often means *remote, if you live in California*. rjs reads the whole
 posting and keeps the ones that fit **where you live**, the years you have, your stack and your salary

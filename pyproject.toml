@@ -1,12 +1,11 @@
 [build-system]
-requires = ["hatchling>=1.24"]
+requires = ["hatchling>=1.24", "hatch-fancy-pypi-readme>=24.1"]
 build-backend = "hatchling.build"
 
 [project]
 name = "remote-jobs-digest"
-dynamic = ["version"]
+dynamic = ["version", "readme"]
 description = "A daily digest of remote jobs you are actually eligible for: company career boards (Greenhouse, Ashby, Lever…) and remote job APIs, filtered by a declarative profile."
-readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Arnau González del Molino" }]
@@ -46,6 +45,17 @@ Issues = "https://github.com/arnaugonzalez/remote-jobs-digest/issues"
 
 [tool.hatch.version]
 path = "src/remote_jobs_digest/__init__.py"
+
+# PyPI renders the README outside the repo: relative image paths become raw GitHub URLs.
+[tool.hatch.metadata.hooks.fancy-pypi-readme]
+content-type = "text/markdown"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+path = "README.md"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = '\]\(docs/'
+replacement = '](https://raw.githubusercontent.com/arnaugonzalez/remote-jobs-digest/main/docs/'
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/remote_jobs_digest"]
