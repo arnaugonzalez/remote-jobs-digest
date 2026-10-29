@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 — unreleased
+
+- `AGENTS.md`: how an AI agent installs, configures and runs rjs for a person, and how to develop the repo.
+
 ## 0.2.0 — 2026-10-29
 
 - Wizard asks for the wider regions whose remote jobs you can take (`geo.region_hints`) and for the country to search on LinkedIn/Indeed (`search.board_locations`, `search.board_queries`).

@@ -14,6 +14,9 @@ floor. It pulls from public company career pages (Greenhouse, Ashby, Lever…) a
 drops 99 % of the noise with plain rules at zero cost, and optionally asks an LLM about the few
 dozen survivors.
 
+**Using an AI agent?** Point Claude Code, Codex, Cursor or Gemini CLI at this repo and say your
+country and role: [AGENTS.md](AGENTS.md) tells it how to install, configure and run rjs for you.
+
 ## Quickstart
 
 ```bash
