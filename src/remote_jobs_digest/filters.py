@@ -9,14 +9,14 @@ from __future__ import annotations
 import re
 
 from remote_jobs_digest import config, platforms
-from remote_jobs_digest.classifier import TITLE_LOC_RE, any_keyword
+from remote_jobs_digest.classifier import (
+    _CURRENCY_RE, any_keyword, hint_in, location_text)
 from remote_jobs_digest.sources.base import Job
 
 # --- Salario --------------------------------------------------------------
 
 _HOURLY_RE = re.compile(r"/\s*h|per hour|hourly|/hr|an hour", re.I)
 _NUM_RE = re.compile(r"(\d[\d,\.]*)\s*([kK])?")
-_CURRENCY_RE = re.compile(r"(USD|EUR|GBP|\$|€|£)")
 
 
 def _num_to_int(num: str, k: str) -> int | None:
@@ -160,9 +160,7 @@ def geo_verdict(job: Job) -> str:
     # Normalizamos separadores: los ATS escriben la misma restricción como
     # "Remote - US", "Remote-US", "Remote (US)" y "Remote, US". Colapsarlos a
     # espacios evita mantener una variante por cada estilo de guion.
-    title_loc = [a or b for a, b in TITLE_LOC_RE.findall(job.title)]
-    loc_raw = ", ".join(filter(None, [job.location, *title_loc])).lower()
-    loc = re.sub(r"[^a-z0-9]+", " ", loc_raw).strip()
+    loc_raw, loc = location_text(job)
     text = f"{job.title} {job.description}".lower()
 
     # La UBICACIÓN manda. La descripción solo puede añadir señal si es
@@ -171,30 +169,30 @@ def geo_verdict(job: Job) -> str:
     # puestos presenciales en San Francisco.
     if any(s in text for s in config.NEGATIVE_SIGNALS):
         return "us_only"
-    if any(h in loc for h in config.REMOTE_BUT_AMERICAS):
+    if hint_in(config.REMOTE_BUT_AMERICAS, loc):
         return "us_only"
 
-    is_remote = any(h in loc for h in config.REMOTE_HINTS)
+    is_remote = hint_in(config.REMOTE_HINTS, loc)
 
-    # España: vale en cualquier modalidad, porque ya vive aquí.
-    if any(h in loc for h in config.SPAIN_HINTS):
+    # Home: vale en cualquier modalidad, porque ya vive aquí.
+    if hint_in(config.SPAIN_HINTS, loc):
         return "ok" if is_remote else "onsite_local"
-    # Región amplia (Europe/EMEA): España queda dentro.
-    if any(h in loc for h in config.EU_REGION_HINTS):
+    # Región amplia (Europe/EMEA): home queda dentro.
+    if hint_in(config.EU_REGION_HINTS, loc):
         return "ok"
-    if any(h in loc for h in config.GLOBAL_LOCATION_HINTS):
+    if hint_in(config.GLOBAL_LOCATION_HINTS, loc):
         return "ok"
-    # País concreto de la UE que no es España.
-    if any(h in loc for h in config.EU_COUNTRY_HINTS):
+    # País concreto de la región que no es home.
+    if hint_in(config.EU_COUNTRY_HINTS, loc):
         return "remote_other_eu" if is_remote else "onsite"
-    # País fuera de la UE: ni siquiera con "remote" sirve — ata la residencia.
-    if any(h in loc for h in config.NON_EU_COUNTRY_HINTS):
+    # País fuera de la región: ni siquiera con "remote" sirve — ata la residencia.
+    if hint_in(config.NON_EU_COUNTRY_HINTS, loc):
         return "onsite"
     # El código de estado se busca sobre el texto SIN normalizar: hace falta la
     # coma de ", CA" para no confundir "Berlin, DE" (Alemania) con Delaware.
     if (is_us_only(job.location)
             or _US_STATE_RE.search(loc_raw)
-            or any(c in loc for c in config.US_CITIES)):
+            or hint_in(config.US_CITIES, loc)):
         return "us_only"
     if is_remote:
         # Remoto, pero ninguna lista de arriba reconoció una región (incluye

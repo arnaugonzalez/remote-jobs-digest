@@ -32,9 +32,15 @@ from remote_jobs_digest.sources.base import Job
 
 _HOURLY_RE = re.compile(r"/\s*h|per hour|hourly|/hr|an hour", re.I)
 _NUM_RE = re.compile(r"(\d[\d,\.]*)\s*([kK])?")
-_CURRENCY_RE = re.compile(r"(USD|EUR|GBP|\$|€|£)")
-_SALARY_CURRENCIES = {"$": "USD", "USD": "USD", "€": "EUR", "EUR": "EUR",
-                      "£": "GBP", "GBP": "GBP"}
+# Símbolo -> ISO. Los más largos primero en la regex: "NZ$" gana a "$".
+SALARY_CURRENCIES = {
+    "$": "USD", "US$": "USD", "USD": "USD", "€": "EUR", "EUR": "EUR",
+    "£": "GBP", "GBP": "GBP", "NZ$": "NZD", "NZD": "NZD", "A$": "AUD",
+    "AU$": "AUD", "AUD": "AUD", "C$": "CAD", "CA$": "CAD", "CAD": "CAD",
+    "CHF": "CHF",
+}
+_CURRENCY_RE = re.compile("(" + "|".join(
+    re.escape(k) for k in sorted(SALARY_CURRENCIES, key=len, reverse=True)) + ")")
 
 # Códigos de estado de EE.UU. sobre el texto SIN normalizar: hace falta la
 # coma de ", CA" para no confundir "Berlin, DE" (Alemania) con Delaware.
@@ -44,6 +50,35 @@ _US_STATE_RE = re.compile(
 # Where a title carries its location: "ML Engineer - US Remote",
 # "Backend Engineer (EMEA)", "Data Engineer | Remote Europe".
 TITLE_LOC_RE = re.compile(r"\s[-–—|]\s+([^-–—|()]+)$|\(([^()]+)\)")
+
+
+def norm_loc(s: str) -> str:
+    """Separadores y signos a espacios: 'Remote-US' == 'Remote (US)'."""
+    return re.sub(r"[^a-z0-9]+", " ", s.lower()).strip()
+
+
+def hint_in(hints, loc: str) -> bool:
+    """Hint por palabra completa sobre una ubicación ya normalizada: 'cet' no
+    casa con 'Princeton', 'nz' con 'Mainz' ni 'uk' con 'Ukraine'."""
+    padded = f" {loc} "
+    return any(f" {h} " in padded for h in map(norm_loc, hints) if h)
+
+
+# Ubicaciones que no dicen dónde: solo entonces se mira el sufijo del título.
+_VAGUE_LOCATIONS = {"", "remote", "fully remote", "remote first", "anywhere",
+                    "worldwide", "global", "hybrid"}
+
+
+def location_text(job) -> tuple[str, str]:
+    """(loc_raw, loc_normalizada). El sufijo del título ("Engineer - US
+    Remote") solo cuenta si `location` no dice nada concreto: con
+    "San Francisco" + título "... - Distributed Data Systems", el sufijo
+    convertía la oferta en global."""
+    parts = [job.location or ""]
+    if norm_loc(job.location or "") in _VAGUE_LOCATIONS:
+        parts += [a or b for a, b in TITLE_LOC_RE.findall(job.title)]
+    loc_raw = ", ".join(p for p in parts if p).lower()
+    return loc_raw, norm_loc(loc_raw)
 
 # "5+ years", "3-5 years of experience", "at least 4 years", "minimum 2
 # years". El número admite decimal: "1.5+ years" es común y sin el
@@ -133,7 +168,7 @@ class Classifier:
         cur_match = _CURRENCY_RE.search(text)
         currency = ""
         if cur_match:
-            currency = _SALARY_CURRENCIES.get(cur_match.group(1), "USD")
+            currency = SALARY_CURRENCIES.get(cur_match.group(1), "USD")
         lo, hi = self.profile.salary.plausible_annual
         nums: list[int] = []
         for m in _NUM_RE.finditer(text):
@@ -264,9 +299,7 @@ class Classifier:
         g = self.profile.geo
         # "Remote - US", "Remote-US", "Remote (US)", "Remote, US": colapsar
         # separadores a espacios evita mantener una variante por estilo.
-        title_loc = [a or b for a, b in TITLE_LOC_RE.findall(job.title)]
-        loc_raw = ", ".join(filter(None, [job.location, *title_loc])).lower()
-        loc = re.sub(r"[^a-z0-9]+", " ", loc_raw).strip()
+        loc_raw, loc = location_text(job)
         text = f"{job.title} {job.description}".lower()
 
         # La UBICACIÓN manda. La descripción solo añade señal si es
@@ -274,28 +307,28 @@ class Classifier:
         # oferta de una empresa que se describe como "a global company".
         if any(s in text for s in self.profile.signals.negative):
             return "us_only"
-        if any(h in loc for h in lexicon.REMOTE_BUT_NORTH_AMERICA):
+        if hint_in(lexicon.REMOTE_BUT_NORTH_AMERICA, loc):
             return "us_only"
 
-        is_remote = any(h in loc for h in g.remote_hints)
+        is_remote = hint_in(g.remote_hints, loc)
 
         # Home: vale en cualquier modalidad, porque ya vives ahí.
-        if any(h in loc for h in g.home_hints):
+        if hint_in(g.home_hints, loc):
             return "ok" if is_remote else "onsite_local"
         # Región amplia: home queda dentro por definición.
-        if any(h in loc for h in g.region_hints):
+        if hint_in(g.region_hints, loc):
             return "ok"
-        if any(h in loc for h in g.global_hints):
+        if hint_in(g.global_hints, loc):
             return "ok"
         # País concreto de la región que no es home.
-        if any(h in loc for h in g.away_hints):
+        if hint_in(g.away_hints, loc):
             return "remote_other_eu" if is_remote else "onsite"
         # Fuera de la región: ni siquiera con "remote" sirve.
-        if any(h in loc for h in g.blocked_hints):
+        if hint_in(g.blocked_hints, loc):
             return "onsite"
         if (self.is_us_only(job.location)
                 or _US_STATE_RE.search(loc_raw)
-                or any(c in loc for c in lexicon.US_CITIES)):
+                or hint_in(lexicon.US_CITIES, loc)):
             return "us_only"
         if is_remote:
             # Remoto, pero ninguna lista de arriba reconoció una región: sin

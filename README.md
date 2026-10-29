@@ -78,7 +78,9 @@ flowchart LR
 
 `rjs init` writes `~/.config/rjs/config.yaml`. Everything the filter uses is in that file;
 `rjs config show` prints the effective values and `rjs config check` validates edits.
-Bundled examples (`rjs init --list-examples`): [`backend-ai-eu`](src/remote_jobs_digest/examples/backend-ai-eu.yaml), [`frontend-latam`](src/remote_jobs_digest/examples/frontend-latam.yaml).
+Bundled examples (`rjs init --list-examples`): [`backend-ai-eu`](src/remote_jobs_digest/examples/backend-ai-eu.yaml), [`frontend-latam`](src/remote_jobs_digest/examples/frontend-latam.yaml), [`frontend-fullstack-nz`](src/remote_jobs_digest/examples/frontend-fullstack-nz.yaml).
+
+Outside Europe: answer the regions question (e.g. `apac, oceania`) and give your country for LinkedIn/Indeed.
 
 | Key | What it does |
 |---|---|

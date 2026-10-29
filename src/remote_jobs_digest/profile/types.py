@@ -14,14 +14,14 @@ from typing import Literal, Mapping, Sequence
 
 from remote_jobs_digest.platforms import CATEGORIES
 
-Currency = Literal["EUR", "USD", "GBP"]
+Currency = Literal["EUR", "USD", "GBP", "NZD", "AUD", "CAD", "CHF"]
 WorkMode = Literal["remote", "hybrid", "onsite"]
 CompanyKind = Literal["product", "consultancy", "any"]
 GeoZone = Literal["ok", "onsite_local", "remote_other_eu", "onsite",
                   "us_only", "remote_unclear", "unknown"]
 Verdict = Literal["APTA", "REVISAR", "DESCARTADA"]
 
-_CURRENCIES: tuple[Currency, ...] = ("EUR", "USD", "GBP")
+_CURRENCIES: tuple[Currency, ...] = ("EUR", "USD", "GBP", "NZD", "AUD", "CAD", "CHF")
 _WORK_MODES: tuple[WorkMode, ...] = ("remote", "hybrid", "onsite")
 _COMPANY_KINDS: tuple[CompanyKind, ...] = ("product", "consultancy", "any")
 

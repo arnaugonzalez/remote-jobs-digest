@@ -21,6 +21,11 @@ from remote_jobs_digest import paths
 from remote_jobs_digest.profile.schema import FIELDS, FieldSpec
 from remote_jobs_digest.profile.types import Profile, ProfileError
 
+# Unidades por 1 EUR, aproximado (2026-10). Solo para derivar los suelos
+# de las otras monedas a partir del que da el usuario; edítalos a mano en
+# la config si quieres afinar uno.
+_PER_EUR = {"EUR": 1.0, "USD": 1.17, "GBP": 0.87, "NZD": 1.95,
+            "AUD": 1.75, "CAD": 1.6, "CHF": 0.94}
 
 @dataclass
 class WizardIO:
@@ -142,7 +147,12 @@ def _parse_answer(field: FieldSpec, raw: str, current_default: object) -> object
             return current_default
         currency = parts[1].upper() if len(parts) > 1 else (
             next(iter(current_default), "EUR"))
-        out = dict(current_default)
+        if currency not in _PER_EUR:
+            return current_default
+        # Las demás monedas se derivan del importe dado (aprox., redondeado a
+        # miles); la que escribió el usuario queda exacta.
+        out = {cur: int(round(amount * _PER_EUR[cur] / _PER_EUR[currency], -3))
+               for cur in _PER_EUR}
         out[currency] = amount
         return out
 
@@ -190,6 +200,7 @@ def run(io: WizardIO, *, dest: Path, base: Profile | None = None,
 
     io.say(f"Setting up your search ({len(FIELDS)} questions, press Enter to "
            f"keep the value in brackets)...")
+    old_floor = dict(_get_path(mapping, "salary.floor"))
     for field in FIELDS:
         current = _get_path(mapping, field.path)
         if field.kind == "stack":
@@ -197,6 +208,15 @@ def run(io: WizardIO, *, dest: Path, base: Profile | None = None,
             continue
         raw = io.ask(field.question, current)
         _set_path(mapping, field.path, _parse_answer(field, raw, current))
+
+    # Si cambió el suelo, los de aviso y junior se derivan de él en todas las
+    # monedas (no se conservan los de otra persona).
+    new_floor = _get_path(mapping, "salary.floor")
+    if new_floor != old_floor:
+        for path, r in (("salary.warn", 0.75), ("salary.floor_junior", 0.875),
+                        ("salary.warn_junior", 0.65)):
+            _set_path(mapping, path,
+                      {cur: int(round(new_floor[cur] * r, -3)) for cur in _PER_EUR})
 
     # geo.home_hints y geo.away_hints/blocked_hints son roles RELATIVOS
     # entre sí (design/CODEBASE-DESIGN.md §5 D2), no listas independientes:
@@ -212,6 +232,21 @@ def run(io: WizardIO, *, dest: Path, base: Profile | None = None,
             cleaned = [h for h in current if h not in new_home]
             if cleaned != current:
                 _set_path(mapping, other_path, cleaned)
+
+    # away_hints son países de la UE del perfil de ejemplo: fuera de España
+    # no tienen sentido como "país concreto de la región que no es home".
+    if not {"spain", "españa"} & new_home:
+        _set_path(mapping, "geo.away_hints", [])
+
+    board_countries = _get_path(mapping, "search.board_locations")
+    if board_countries:
+        sources = list(_get_path(mapping, "search.active_sources"))
+        sources += [s for s in ("linkedin", "indeed") if s not in sources]
+        _set_path(mapping, "search.active_sources", sources)
+        if not _get_path(mapping, "search.board_queries"):
+            _set_path(mapping, "search.board_queries", ["software engineer"])
+        io.say(f"  LinkedIn/Indeed on for {', '.join(board_countries)}: install "
+               f"them with pip install 'remote-jobs-digest[boards]'")
 
     try:
         profile = Profile.from_mapping(mapping)

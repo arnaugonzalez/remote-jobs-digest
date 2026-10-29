@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0 — 2026-10-29
+
+- Wizard asks for the wider regions whose remote jobs you can take (`geo.region_hints`) and for the country to search on LinkedIn/Indeed (`search.board_locations`, `search.board_queries`).
+- Salary in NZD, AUD, CAD and CHF; the wizard derives the other currencies' floors and warn levels from the one you give.
+- Locations match whole words, not substrings: fixes "Princeton", "Albacete" and "Gloucestershire" matching "cet"/"cest", "Mainz" matching "nz", and "Ukraine" matching "uk".
+- A title suffix ("Engineer - US Remote") only counts when `location` is vague; "San Francisco" with a "... - Distributed Data Systems" title is no longer global.
+- "distributed" is no longer a global hint by default (it stays a remote hint).
+- LinkedIn skips a location it does not recognise (most results outside it) instead of silently returning US jobs.
+- New example `frontend-fullstack-nz`.
+
 ## 0.1.1 — 2026-09-26
 
 - PyPI page: README links to repo files (deploy templates, example profiles) now point to GitHub.

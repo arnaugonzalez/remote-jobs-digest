@@ -166,8 +166,12 @@ USER_THESIS = _profile.thesis()
 # ---------------------------------------------------------------------------
 # Salario — derivado de profile.salary.
 # ---------------------------------------------------------------------------
-SALARY_CURRENCIES = {"$": "USD", "USD": "USD", "€": "EUR", "EUR": "EUR",
-                     "£": "GBP", "GBP": "GBP"}
+SALARY_CURRENCIES = {
+    "$": "USD", "US$": "USD", "USD": "USD", "€": "EUR", "EUR": "EUR",
+    "£": "GBP", "GBP": "GBP", "NZ$": "NZD", "NZD": "NZD", "A$": "AUD",
+    "AU$": "AUD", "AUD": "AUD", "C$": "CAD", "CA$": "CAD", "CAD": "CAD",
+    "CHF": "CHF",
+}
 MIN_PLAUSIBLE_ANNUAL, MAX_PLAUSIBLE_ANNUAL = _profile.salary.plausible_annual
 MIN_SALARY = dict(_profile.salary.floor)
 WARN_SALARY = dict(_profile.salary.warn)

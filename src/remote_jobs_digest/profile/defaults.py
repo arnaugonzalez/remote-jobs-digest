@@ -117,7 +117,6 @@ _GEO = GeoPolicy(
     global_hints=(
         "worldwide", "anywhere", "global", "remote - global", "fully remote",
         "work from anywhere", "any location", "location agnostic",
-        "distributed",
     ),
     remote_hints=("remote", "anywhere", "worldwide", "distributed", "wfh",
                   "teletrabajo", "home-based", "work from home"),

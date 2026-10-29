@@ -190,20 +190,30 @@ def _enrich_descriptions(jobs: list[Job]) -> None:
     log(f"  linkedin: {enriched}/{len(cands)} details with description")
 
 
+def _location_hits(cards: list[Job], location: str) -> int:
+    """Cuántas ofertas dicen estar en `location` (con coma, cuenta su última
+    parte: "Auckland, New Zealand" -> "new zealand")."""
+    needle = location.split(",")[-1].strip().lower()
+    return sum(1 for job in cards if needle in job.location.lower())
+
+
 def fetch() -> list[Job]:
     by_url: dict[str, Job] = {}
     errors = 0
     aborted = False
     # Easy Apply primero: así el flag queda puesto aunque la pasada general
     # encuentre la misma oferta.
+    unrecognised: set[str] = set()
     for easy in (True, False):
         if aborted:
             break
         for location in config.LINKEDIN_LOCATIONS:
             if aborted:
                 break
-            for term in config.LINKEDIN_SEARCH_TERMS:
-                if aborted:
+            if location in unrecognised:
+                continue
+            for term_idx, term in enumerate(config.LINKEDIN_SEARCH_TERMS):
+                if aborted or location in unrecognised:
                     break
                 start = 0
                 for _page in range(config.LINKEDIN_PAGES):
@@ -221,6 +231,17 @@ def fetch() -> list[Job]:
                         break
                     if not cards:
                         break         # no hay más páginas para esta query
+                    # LinkedIn cae en silencio a EE.UU. con una ubicación que
+                    # no reconoce: si la primera página no es de esa zona, se
+                    # descarta la ubicación entera. "Worldwide" no se mide.
+                    if (term_idx == 0 and _page == 0
+                            and location.lower() != "worldwide"):
+                        hits = _location_hits(cards, location)
+                        if len(cards) >= 5 and hits < 0.6 * len(cards):
+                            log(f"  linkedin: '{location}' no parece reconocida "
+                                f"({hits}/{len(cards)} ofertas allí); se omite")
+                            unrecognised.add(location)
+                            break
                     # La página real es de ~10 tarjetas: avanzar por lo
                     # recibido, no por 25 (saltaría ofertas).
                     start += len(cards)
