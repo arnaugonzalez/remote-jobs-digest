@@ -1,3 +1,5 @@
+![remote-jobs-digest: one daily digest of the remote roles you can actually get](docs/social-preview.jpg)
+
 # remote-jobs-digest
 
 **Stop refreshing ten job boards. Get one daily digest of the remote roles you can actually get.**
@@ -5,8 +7,6 @@
 [![ci](https://github.com/arnaugonzalez/remote-jobs-digest/actions/workflows/ci.yml/badge.svg)](https://github.com/arnaugonzalez/remote-jobs-digest/actions/workflows/ci.yml)
 ![python](https://img.shields.io/badge/python-3.11%20|%203.12%20|%203.13-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
-
-![rjs init, then rjs run --no-ai: 4,847 jobs collected from 7 sources, 32 shortlisted, top 3 printed](docs/demo.gif)
 
 "Remote" on a job board often means *remote, if you live in California*. rjs reads the whole
 posting and keeps the ones that fit **where you live**, the years you have, your stack and your salary
@@ -25,7 +25,7 @@ rjs init                                 # 13 questions, or: rjs init --from bac
 rjs run --no-ai                          # prints today's digest, no API keys needed
 ```
 
-A first run takes under a minute. It prints a summary and the digest, and writes a CSV, a JSON and
+A first run takes a few minutes. It prints a summary and the digest, and writes a CSV, a JSON and
 `digest_latest.md` to the data dir (`rjs paths` shows where).
 
 ```
@@ -43,6 +43,16 @@ To cover more companies, build the list of company ATS boards once (about 10 min
 rjs boards build --fetch     # ~1,100 remote-friendly companies from public GitHub lists
 rjs boards discover          # finds their Greenhouse/Ashby/Lever/... boards (~500)
 ```
+
+## Example: a React developer in Auckland
+
+![rjs init --from frontend-fullstack-nz, then rjs run --no-ai: about 4,900 jobs collected from LinkedIn NZ, Indeed, company career pages and remote boards; 21 shortlisted, top 5 printed](docs/demo.gif)
+
+The bundled `frontend-fullstack-nz` profile says: home is New Zealand, remote or hybrid, React and
+TypeScript, at least 110k NZD. Out of about 4,900 postings, rjs keeps 21: roles in Auckland and
+Wellington, plus remote roles that are open worldwide. "Remote (US only)" and "Remote" jobs that
+turn out to be in San Francisco are dropped. Real run, no API keys, recorded with
+[vhs](https://github.com/charmbracelet/vhs).
 
 ## Why this and not…
 

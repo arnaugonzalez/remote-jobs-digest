@@ -2,6 +2,7 @@
 
 ## 0.2.1 — unreleased
 
+- README: social preview on top; new narrated demo (React developer in Auckland) in its own example section.
 - `AGENTS.md`: how an AI agent installs, configures and runs rjs for a person, and how to develop the repo.
 
 ## 0.2.0 — 2026-10-29
